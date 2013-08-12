@@ -10,6 +10,10 @@
 namespace Application;
 
 
+use Zend\ModuleManager\ModuleManager;
+
+use Zend\Mvc\Router\RouteMatch;
+
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
 // Sessions
@@ -32,24 +36,54 @@ class Module
              $result->setTerminal(TRUE);
 		});
 		
-		//Initiate session
-		$this->initSession($e);
+		// Force authentication
+		$serviceManager = $e->getApplication()->getServiceManager();
+		$auth           = $serviceManager->get('zfcuser_auth_service');
+		
+		$eventManager->attach(MvcEvent::EVENT_ROUTE, function($e) use ($auth) {
+            $match = $e->getRouteMatch();
+
+            // No route match, this is a 404
+            if (!$match instanceof RouteMatch) {
+                return;
+            }
+            // White list (Accesible routes without auth)
+			$list = array('zfcuser/login');
+			
+            // Route is whitelisted
+            $name = $match->getMatchedRouteName();
+            if (in_array($name, $list)) {
+                return;
+            }
+
+            // User is authenticated
+            if ($auth->hasIdentity()) {
+                return;
+            }
+
+            // Redirect to the user login page, as an example
+            $router   = $e->getRouter();
+            $url      = $router->assemble(array(), array(
+                'name' => 'zfcuser/login'
+            ));
+
+            $response = $e->getResponse();
+            $response->getHeaders()->addHeaderLine('Location', $url);
+            $response->setStatusCode(302);
+
+            return $response;
+        }, -100);
     }
 
-    private function initSession(MvcEvent $e)
+	public function init(ModuleManager $moduleManager)
     {
-    	//die("Init session - Start");
-    	// grab the config array
-        $serviceManager = $e->getApplication()->getServiceManager();
-        $config         = $serviceManager->get('config');
-        $adapter        = $serviceManager->get('Zend\Db\Adapter\Adapter');
-        
-    	$tableGateway   = new TableGateway('sessions', $adapter);
-		$saveHandler    = new DbTableGateway($tableGateway, new DbTableGatewayOptions());
-		$manager        = new SessionManager();
-		$manager->setSaveHandler($saveHandler);
-		$manager->start();
-    }
+        $sharedEvents = $moduleManager->getEventManager()->getSharedManager();
+        $sharedEvents->attach('ZfcUser', 'dispatch', function($e) {
+        	// This event will only be fired when an ActionController under the ZfcUser namespace is dispatched.
+        	$controller = $e->getTarget();
+        	$controller->layout('layout/blank');
+    	}, 100);
+	}
     
     public function getConfig()
     {

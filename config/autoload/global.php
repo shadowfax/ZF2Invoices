@@ -13,6 +13,23 @@
 
 return array(
     // ...
+    
+	// Doctrine
+	'doctrine' => array(
+		'connection' => array(
+			'orm_default' =>array(
+				'driverClass' => 'Doctrine\DBAL\Driver\PDOMySql\Driver',
+				'params' => array(
+					'host'     => 'localhost',
+					'port'     => '3306',
+					//'user'     => '<YOUR USERNAME>',
+					//'password' => '<YOUR PASSWORD>',
+					'dbname'   => 'zf2invoices',
+				)
+			)
+		)
+	),
+	// ZF2 Database
     'db' => array(
         'driver'         => 'Pdo',
         'dsn'            => 'mysql:dbname=zf2invoices;host=localhost',
