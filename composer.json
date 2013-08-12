@@ -1,9 +1,9 @@
 {
-    "name": "zendframework/skeleton-application",
-    "description": "Skeleton Application for ZF2",
+    "name": "shadowfax/zf2invoices",
+    "description": "Invoicing Application powered by ZF2",
     "license": "BSD-3-Clause",
     "keywords": [
-        "framework",
+        "invoice",
         "zf2"
     ],
     "homepage": "http://framework.zend.com/",
