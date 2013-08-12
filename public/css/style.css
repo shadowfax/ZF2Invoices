@@ -1,28 +1,43 @@
 body {
-    padding-top: 60px;
-    padding-bottom: 40px;
+	margin:0;
+    padding:0;
 }
-
-#globallinks {
-	position: relative;
-	right: 0;
-	display: block;
+#globalheader {
+	min-height:77px;
+}
+#navigation-topmost {
+	font-size: 11px;
+	padding: 0;
+	margin: 0;
 	float: right;
-	list-style: none;
-	margin: 0 10px 0 10px;
+	list-style:none;
 }
-#globallinks>li {
+#navigation-topmost li {
+	padding: 0;
+	margin: 0;
 	float: left;
-}
-#globallinks>li>a {
 	display: block;
-	float: none;
-	padding: 10px 15px 10px;
-	color: #fff;
-	text-decoration: none;
+	list-style: none;
 }
-#globallinks:after {
-	clear:both;
+#navigation-topmost li a {
+	font-weight: normal;
+	line-height: 25px;
+	display: block;
+	float: left;
+	padding: 0 7px;
+	height: 25px;
+	background: #e5e5e5;
+	color: #888;
+}
+#navigation-topmost li:first-child a {
+	-webkit-border-bottom-left-radius: 5px;
+	-moz-border-radius-bottomleft: 5px;
+	border-bottom-left-radius: 5px;
+}
+#navigation-topmost li:last-child a {
+	-webkit-border-bottom-right-radius: 5px;
+	-moz-border-radius-bottomright: 5px;
+	border-bottom-right-radius: 5px;
 }
 .zf-green {
     color: #68b604;

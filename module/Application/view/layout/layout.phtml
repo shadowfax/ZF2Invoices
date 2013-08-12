@@ -21,25 +21,14 @@
 
     </head>
     <body>
-        <div class="navbar navbar-inverse navbar-fixed-top">
-            <div class="navbar-inner">
-                <div class="container">
-                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </a>
-                    <a class="brand" href="<?php echo $this->url('home') ?>"><?php echo $this->translate('Invoices') ?></a>
-                    <div class="nav-collapse collapse">
-                        <ul class="nav">
-                            <li class="active"><a href="<?php echo $this->url('home') ?>"><?php echo $this->translate('New') ?></a></li>
-                        </ul>
-                        <ul id="globallinks">
-                        	<li><a href="<?php echo $this->url('zfcuser/logout') ?>"><?php echo $this->escapeHtml($this->translate("Logout")); ?></a></li>
-                        </ul>
-                    </div><!--/.nav-collapse -->
-                </div>
-            </div>
+        
+        <div id="globalheader" class="container">
+        
+        	<ul id="navigation-topmost">
+        		<li><a href=""><?php echo $this->escapeHtml($this->translate("My Account")); ?></a></li>
+        		<li><a href=""><?php echo $this->escapeHtml($this->translate("Settings")); ?></a></li>
+        		<li><a href="<?php echo $this->url('zfcuser/logout') ?>"><?php echo $this->escapeHtml($this->translate("Logout")); ?></a></li>
+        	</ul>
         </div>
         
         <div class="container navigation-container">
