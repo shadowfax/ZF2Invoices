@@ -26,7 +26,7 @@
         
         	<ul id="navigation-topmost">
         		<li><a href=""><?php echo $this->escapeHtml($this->translate("My Account")); ?></a></li>
-        		<li><a href=""><?php echo $this->escapeHtml($this->translate("Settings")); ?></a></li>
+        		<li><a href="<?php echo $this->url('settings') ?>"><?php echo $this->escapeHtml($this->translate("Settings")); ?></a></li>
         		<li><a href="<?php echo $this->url('zfcuser/logout') ?>"><?php echo $this->escapeHtml($this->translate("Logout")); ?></a></li>
         	</ul>
         </div>

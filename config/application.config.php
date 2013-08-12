@@ -12,6 +12,7 @@ return array(
 		'Invoices',
 		'People',
 		'Expenses',
+		'Settings',
     ),
 
     // These are various options for the listeners attached to the ModuleManager
