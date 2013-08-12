@@ -3,6 +3,27 @@ body {
     padding-bottom: 40px;
 }
 
+#globallinks {
+	position: relative;
+	right: 0;
+	display: block;
+	float: right;
+	list-style: none;
+	margin: 0 10px 0 10px;
+}
+#globallinks>li {
+	float: left;
+}
+#globallinks>li>a {
+	display: block;
+	float: none;
+	padding: 10px 15px 10px;
+	color: #fff;
+	text-decoration: none;
+}
+#globallinks:after {
+	clear:both;
+}
 .zf-green {
     color: #68b604;
 }
