@@ -56,7 +56,7 @@ return array(
 				'route' => 'people',
     			'pages' => array(
     				'clients' => array(
-    					'label' => 'People',
+    					'label' => 'Clients',
 						'route' => 'people',
     					'controller' => 'Clients',
     					'action' => 'index'
