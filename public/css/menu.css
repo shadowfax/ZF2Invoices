@@ -1,0 +1,130 @@
+@CHARSET "ISO-8859-1";
+
+.navigation-container {
+	height: 35px;
+	border: 1px solid white;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	clear: both;
+	font-size: 14px;
+	font-weight: bold;
+	position:relative;
+	margin-bottom:58px;
+}
+
+ul.navigation {
+	background-color: #0D83DD !important;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	color: #fff;
+	display: block;
+	height: 35px;
+	list-style:none;
+	margin: 0;
+	padding:0;
+	width: 100%;
+}
+ul.navigation > li {
+	background: transparent url('../images/nav-sprites.png') right -375px no-repeat;
+	list-style: none;
+	float: left;
+}
+
+ul.navigation > li.first {
+	-webkit-border-top-left-radius: 5px;
+	-moz-border-radius-topleft: 5px;
+	border-top-left-radius: 5px;
+	-webkit-border-bottom-left-radius: 5px;
+	-moz-border-radius-bottomleft: 5px;
+	border-bottom-left-radius: 5px;
+}
+
+ul.navigation > li.active:first-child {
+	margin-left: 9px;
+}
+
+ul.navigation > li, ul.navigation > li > a {
+	color:#fff;
+	display: block;
+	height: 35px;
+	margin: 0;
+}
+
+ul.navigation > li > a {
+	background-color: transparent;
+	text-decoration: none;
+	line-height: 35px;
+	float: left;
+	padding: 0 10px;
+}
+ul.navigation > li.active > a {
+	background-color: white;
+	height: 39px;
+	line-height: 44px;
+	margin-top: -5px;
+	margin-left: -2px;
+	-webkit-border-top-left-radius: 4px;
+	-moz-border-radius-topleft: 4px;
+	border-top-left-radius: 4px;
+	-webkit-border-top-right-radius: 4px;
+	-moz-border-radius-topright: 4px;
+	border-top-right-radius: 4px;
+	border: 1px solid #CCC;
+	border-bottom-color: #fff;
+	color: #0D83DD !important;
+}
+
+ul.navigation > li ul {
+	display:none;
+	margin:0;
+	padding:0;
+}
+
+ul.navigation > li.active > ul {
+	display:block;
+}
+
+ul.navigation > li > ul {
+	background-color: #fff!important;
+	border-top: 1px solid white;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	font-weight: bold;
+	position:absolute;
+	left:0;
+	right:0;
+	top:35px;
+	border-bottom: 1px solid #ccc;
+	height: 37px;
+	list-style:none;
+	margin:0;
+	padding-left: 5px;
+}
+ul.navigation > li > ul > li {
+	margin: 0;
+	list-style: none;
+	float: left;
+	height: 46px;
+}
+
+ul.navigation > li > ul > li > a {
+	display:block;
+	font-weight: normal;
+	height: 31px;
+	line-height: 31px;
+	margin-top:3px;
+	padding: 0 8px 0 8px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	text-decoration: none;
+}
+
+ul.navigation > li > ul > li.active > a  {
+	background-color: #e7f4fe !important;
+}
+ul.navigation > li > ul > li.active {
+background: url('../images/nav-sprites.png') center -271px;
+}

@@ -57,6 +57,9 @@ return array(
             'Zend\Cache\Service\StorageCacheAbstractServiceFactory',
             'Zend\Log\LoggerAbstractServiceFactory',
         ),
+        'factories' => array(
+			'Navigation' => 'Zend\Navigation\Service\DefaultNavigationFactory',
+		),
         'aliases' => array(
             'translator' => 'MvcTranslator',
         ),
@@ -113,5 +116,21 @@ return array(
                 )
             )
         )
-    )
+    ),
+    // Navigation
+    'navigation' => array(
+        'default' => array(
+            'home' => array(
+				'label' => 'Home',
+				'route' => 'home',
+				'order' => -100,  
+    			'pages' => array(
+    				'overview' => array(
+    					'label' => 'Overview',
+    					'route' => 'home',
+    				),
+    			),
+             ),
+         ),
+     ),
 );

@@ -9,6 +9,9 @@ return array(
 		'ZfcUserDoctrineORM',
 		'BjyAuthorize',
         'Application',
+		'Invoices',
+		'People',
+		'Expenses',
     ),
 
     // These are various options for the listeners attached to the ModuleManager

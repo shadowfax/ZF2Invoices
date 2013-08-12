@@ -11,6 +11,7 @@
         <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))
                         ->prependStylesheet($this->basePath() . '/css/bootstrap-responsive.min.css')
                         ->prependStylesheet($this->basePath() . '/css/style.css')
+                        ->prependStylesheet($this->basePath() . '/css/menu.css')
                         ->prependStylesheet($this->basePath() . '/css/bootstrap.min.css') ?>
 
         <!-- Scripts -->
@@ -40,6 +41,38 @@
                 </div>
             </div>
         </div>
+        
+        <div class="container navigation-container">
+        	<?php echo $this->navigation('Navigation')->menu(); ?>
+        </div>
+        
+        <!-- 
+        <div class="container nav-mainlinks-container">
+	        <ul class="nav-mainlinks custom-background">
+					<li class="first active custom-background-dark-hover">
+						<span>
+							<a href="<?php echo $this->url("home"); ?>"><?php echo $this->translate("Home"); ?></a>
+						</span>
+					</li>
+					<li class="custom-background-dark-hover">
+						<span>
+							<a href="<?php echo $this->url("people"); ?>"><?php echo $this->translate("People"); ?></a>
+						</span>
+					</li>
+					<li class="custom-background-dark-hover">
+						<span>
+							<a href="<?php echo $this->url("invoices"); ?>"><?php echo $this->translate("Invoices"); ?></a>
+						</span>
+					</li>
+					<li class="custom-background-dark-hover">
+						<span>
+							<a href="<?php echo $this->url("expenses"); ?>"><?php echo $this->translate("Expenses"); ?></a>
+						</span>
+					</li>
+			</ul>
+		</div>
+		 -->
+		 
         <div class="container">
             <?php echo $this->content; ?>
             <hr>
