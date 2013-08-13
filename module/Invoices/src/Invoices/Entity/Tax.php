@@ -39,6 +39,12 @@ class Tax
      */
     protected $equalization;
     
+    /**
+     * @var bool
+     * @ORM\Column(type="boolean")
+     */
+    protected $active;
+    
 	/**
      * Get id.
      *
@@ -125,5 +131,27 @@ class Tax
     public function setEqualization($percentage)
     {
         $this->equalization = $percentage;
+    }
+    
+	/**
+     * Get active.
+     *
+     * @return bool
+     */
+    public function getActive()
+    {
+        return $this->active;
+    }
+
+    /**
+     * Set Active.
+     *
+     * @param bool $active
+     *
+     * @return void
+     */
+    public function setActive($active)
+    {
+        $this->active = $active;
     }
 }

@@ -12,12 +12,29 @@
     <th><?php echo $this->translate("Description")?></th>
     <th><?php echo $this->translate("Rate")?></th>
     <th><?php echo $this->translate("Equalization")?></th>
+    <th><?php echo $this->translate("Active")?></th>
 </tr>
-<?php foreach ($taxes as $tax) : ?>
+<?php 
+	$array_index = 0;
+	foreach ($taxes as $tax) : 
+?>
 <tr>
-    <td><?php echo $this->escapeHtml($tax->getDescription());?></td>
-    <td><?php echo $this->escapeHtml($tax->getPercentage());?>%</td>
-    <td><?php echo $this->escapeHtml($tax->getEqualization());?>%</td>
+    <td>
+    	<input name="taxes[<?php echo $array_index; ?>][id]" type="hidden" value="<?php echo $this->escapeHtml($tax->getId());?>" />
+    	<input class="formTextMed" maxlength="15" name="taxes[<?php echo $array_index; ?>][description]" type="text" value="<?php echo $this->escapeHtml($tax->getDescription());?>" style="width: 200px">
+    </td>
+    <td>
+    	<input class="formTextMini" onkeypress="return numbersonly(this,event)" maxlength="7" name="taxes[<?php echo $array_index; ?>][percentage]" type="text" value="<?php echo $this->escapeHtml($tax->getPercentage());?>" style="width:50px;"> %
+    </td>
+    <td>
+    	<input class="formTextMini" onkeypress="return numbersonly(this,event)" maxlength="7" name="taxes[<?php echo $array_index; ?>][equalization]" type="text" value="<?php echo $this->escapeHtml($tax->getEqualization());?>" style="width:50px;"> %
+    </td>
+    <td>
+    	<input type="checkbox" name="taxes[<?php echo $array_index; ?>][active]" <?php echo ($tax->getActive()) ? 'checked="checked"' : ''; ?>" />
+    </td>
 </tr>
-<?php endforeach; ?>
+<?php
+		$array_index++; 
+	endforeach; 
+?>
 </table>
