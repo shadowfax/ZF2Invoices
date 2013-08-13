@@ -32,8 +32,17 @@ class TaxesController extends AbstractActionController
     
     public function indexAction()
     {
+    	// Is tax equalization active?
+    	// Tax equalization in spanish is "Recargo de equivalencia" and is needed
+    	// for some invoices
+    	$tax_equalization = $this->getEntityManager()->getRepository('Application\Entity\Option')->findOneBy(array('key' => 'tax_equalization'));
+    	if (null !== $tax_equalization) {
+    		$tax_equalization = $tax_equalization->getValue();
+    	}
+    	
         return new ViewModel(
         	array(
+        		'tax_equalization' => $tax_equalization,
                 'taxes' => $this->getEntityManager()->getRepository('Invoices\Entity\Tax')->findAll() 
             )
         );

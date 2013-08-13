@@ -11,7 +11,9 @@
 <tr>
     <th><?php echo $this->translate("Description")?></th>
     <th><?php echo $this->translate("Rate")?></th>
+    <?php if ($tax_equalization) : ?>
     <th><?php echo $this->translate("Equalization")?></th>
+    <?php endif; ?>
     <th><?php echo $this->translate("Active")?></th>
 </tr>
 <?php 
@@ -26,9 +28,11 @@
     <td>
     	<input class="formTextMini" onkeypress="return numbersonly(this,event)" maxlength="7" name="taxes[<?php echo $array_index; ?>][percentage]" type="text" value="<?php echo $this->escapeHtml($tax->getPercentage());?>" style="width:50px;"> %
     </td>
+    <?php if ($tax_equalization) : ?>
     <td>
     	<input class="formTextMini" onkeypress="return numbersonly(this,event)" maxlength="7" name="taxes[<?php echo $array_index; ?>][equalization]" type="text" value="<?php echo $this->escapeHtml($tax->getEqualization());?>" style="width:50px;"> %
     </td>
+    <?php endif; ?>
     <td>
     	<input type="checkbox" name="taxes[<?php echo $array_index; ?>][active]" <?php echo ($tax->getActive()) ? 'checked="checked"' : ''; ?>" />
     </td>
