@@ -1,0 +1,14 @@
+<table class="table">
+<tr>
+    <th><?php echo $this->translate("Description")?></th>
+    <th><?php echo $this->translate("Rate")?></th>
+    <th><?php echo $this->translate("Equalization")?></th>
+</tr>
+<?php foreach ($taxes as $tax) : ?>
+<tr>
+    <td><?php echo $this->escapeHtml($tax->getDescription());?></td>
+    <td><?php echo $this->escapeHtml($tax->getPercentage());?>%</td>
+    <td><?php echo $this->escapeHtml($tax->getEqualization());?>%</td>
+</tr>
+<?php endforeach; ?>
+</table>

@@ -3,6 +3,7 @@ return array(
     'controllers' => array(
         'invokables' => array(
             'Settings\Controller\Index' => 'Settings\Controller\IndexController',
+			'Settings\Controller\Taxes' => 'Settings\Controller\TaxesController',
         ),
     ),
     'router' => array(
@@ -15,8 +16,8 @@ return array(
                     'defaults' => array(
                         // Change this value to reflect the namespace in which
                         // the controllers for your module are found
-                        '__NAMESPACE__' => 'People\Controller',
-                        'controller'    => 'Clients',
+                        '__NAMESPACE__' => 'Settings\Controller',
+                        'controller'    => 'Index',
                         'action'        => 'index',
                     ),
                 ),
