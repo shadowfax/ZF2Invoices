@@ -36,6 +36,7 @@ return array(
                                 'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
                             ),
                             'defaults' => array(
+                            	'action' => 'index'
                             ),
                         ),
                     ),
@@ -48,5 +49,25 @@ return array(
             'SettingsModule' => __DIR__ . '/../view',
         ),
     ),
-    // NO NAVIGATION!
+    // No default navigation as I don't want it shown in the main menu!
+    // However we need a navigation for the module to show the internal menu
+    'service_manager' => array(
+		'factories' => array(
+			'settings_navigation' => 'Settings\Navigation\Service\SettingsNavigationFactory'
+		),
+	),
+    'navigation' => array(
+    	'settings-nav' => array(
+    		'company' => array(
+				'label' => 'Company',
+				'route' => 'settings'
+			),
+			'taxes' => array(
+				'label' => 'Taxes',
+				'route' => 'settings/default',
+				'controller' => 'taxes',
+				'action' => 'index'
+			),
+    	)
+    )
 );

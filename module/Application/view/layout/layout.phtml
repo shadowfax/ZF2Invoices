@@ -12,6 +12,7 @@
                         ->prependStylesheet($this->basePath() . '/css/bootstrap-responsive.min.css')
                         ->prependStylesheet($this->basePath() . '/css/style.css')
                         ->prependStylesheet($this->basePath() . '/css/menu.css')
+                        ->prependStylesheet($this->basePath() . '/css/wizard.css')
                         ->prependStylesheet($this->basePath() . '/css/bootstrap.min.css') ?>
 
         <!-- Scripts -->
@@ -31,7 +32,7 @@
         	</ul>
         </div>
         
-        <div class="container navigation-container">
+        <div id="main-navigation" class="container navigation-container">
         	<?php echo $this->navigation('Navigation')->menu(); ?>
         </div>
         
