@@ -2,7 +2,7 @@
 return array(
     'controllers' => array(
         'invokables' => array(
-            'Settings\Controller\Index' => 'Settings\Controller\IndexController',
+            'Settings\Controller\Company' => 'Settings\Controller\CompanyController',
 			'Settings\Controller\Taxes' => 'Settings\Controller\TaxesController',
         ),
     ),
@@ -17,7 +17,7 @@ return array(
                         // Change this value to reflect the namespace in which
                         // the controllers for your module are found
                         '__NAMESPACE__' => 'Settings\Controller',
-                        'controller'    => 'Index',
+                        'controller'    => 'company',
                         'action'        => 'index',
                     ),
                 ),
