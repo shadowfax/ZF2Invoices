@@ -1,7 +1,6 @@
 <?php
 namespace Invoices\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -154,4 +153,5 @@ class Tax
     {
         $this->active = $active;
     }
+   
 }
