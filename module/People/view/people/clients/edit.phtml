@@ -1,0 +1,16 @@
+<?php
+$form->setAttribute('action', $this->url('home'))
+     ->prepare();
+
+echo $this->form()->openTag($form);
+
+$customer = $form->get('customer');
+
+echo $this->formRow($customer->get('name'));
+echo $this->formRow($customer->get('tax_id'));
+echo $this->formCollection($customer->get('addresses'));
+
+echo $this->formHidden($form->get('csrf'));
+echo $this->formElement($form->get('submit'));
+
+echo $this->form()->closeTag();

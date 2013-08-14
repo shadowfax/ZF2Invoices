@@ -1,0 +1,19 @@
+<h2><?php echo $this->translate("Clients"); ?></h2>
+	
+<table class="table">
+<tr>
+    <th><?php echo $this->translate("Organization")?></th>
+</tr>
+<?php 
+	foreach ($customers as $client) : 
+?>
+<tr>
+    <td>
+    	<?php echo $this->escapeHtml($client->getName()); ?>
+    </td>
+    
+</tr>
+<?php
+	endforeach; 
+?>
+</table>
