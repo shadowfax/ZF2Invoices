@@ -7,7 +7,7 @@ echo $this->form()->openTag($form);
 $customer = $form->get('customer');
 
 echo $this->formRow($customer->get('name'));
-echo $this->formRow($customer->get('tax_id'));
+echo $this->formRow($customer->get('taxId'));
 echo $this->formCollection($customer->get('addresses'));
 
 echo $this->formHidden($form->get('csrf'));

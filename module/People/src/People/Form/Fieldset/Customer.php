@@ -25,7 +25,7 @@ class Customer extends Fieldset implements InputFilterProviderInterface
         ));
 
         $this->add(array(
-            'name' => 'tax_id',
+            'name' => 'taxId',
             'options' => array(
                 'label' => 'Tax ID'
             ),
