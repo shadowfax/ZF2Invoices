@@ -68,7 +68,8 @@ class ClientsController extends AbstractActionController
 		}
 
 		return array(
-			'form' => $form
+			'form' => $form,
+			'customer' => $customer
 		);
     }
     

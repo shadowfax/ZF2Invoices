@@ -54,13 +54,13 @@ return array(
         'default' => array(
             'people' => array(
 				'label' => 'People',
-				'route' => 'people',
+				'route' => 'people/default',
+    			'controller' => 'clients',
     			'pages' => array(
     				'clients' => array(
     					'label' => 'Clients',
-						'route' => 'people',
-    					'controller' => 'Clients',
-    					'action' => 'index'
+						'route' => 'people/default',
+    					'controller' => 'clients'
     				),
     				'users' => array(
     					'label' => 'Staff and Contractors',
