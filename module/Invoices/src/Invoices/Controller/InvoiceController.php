@@ -4,7 +4,7 @@ namespace Invoices\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
-class IndexController extends AbstractActionController
+class InvoiceController extends AbstractActionController
 {
     public function indexAction()
     {

@@ -4,7 +4,7 @@ namespace Invoices;
 return array(
     'controllers' => array(
         'invokables' => array(
-            'Invoices\Controller\Index' => 'Invoices\Controller\IndexController',
+            'Invoices\Controller\Invoice' => 'Invoices\Controller\InvoiceController',
         ),
     ),
     'router' => array(
@@ -18,7 +18,7 @@ return array(
                         // Change this value to reflect the namespace in which
                         // the controllers for your module are found
                         '__NAMESPACE__' => 'Invoices\Controller',
-                        'controller'    => 'Index',
+                        'controller'    => 'invoice',
                         'action'        => 'index',
                     ),
                 ),
@@ -54,30 +54,32 @@ return array(
         'default' => array(
             'invoices' => array(
 				'label' => 'Invoices',
-				'route' => 'invoices',
+				'route' => 'invoices/default',
+    			'controller' => 'invoice',
     			'pages' => array(
     				'invoices' => array(
     					'label' => 'Invoices',
-						'route' => 'invoices',
+						'route' => 'invoices/default',
+    					'controller' => 'invoice'
     				),
     				'recurring' => array(
     					'label' => 'Recurring',
-						'route' => 'invoices',
+						'route' => 'invoices/default',
     					'controller' => 'Recurring',
     				),
     				'received' => array(
     					'label' => 'Received',
-						'route' => 'invoices',
+						'route' => 'invoices/default',
     					'controller' => 'Received',
     				),
     				'payments' => array(
     					'label' => 'Payments',
-						'route' => 'invoices',
+						'route' => 'invoices/default',
     					'controller' => 'Payments',
     				),
     				'items' => array(
     					'label' => 'Items',
-						'route' => 'invoices',
+						'route' => 'invoices/default',
     					'controller' => 'Items',
     				),
     			),

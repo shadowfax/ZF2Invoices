@@ -16,7 +16,7 @@ return array(
                         // Change this value to reflect the namespace in which
                         // the controllers for your module are found
                         '__NAMESPACE__' => 'Expenses\Controller',
-                        'controller'    => 'Index',
+                        'controller'    => 'index',
                         'action'        => 'index',
                     ),
                 ),
@@ -52,13 +52,13 @@ return array(
         'default' => array(
             'expenses' => array(
 				'label' => 'Expenses',
-				'route' => 'expenses',
+				'route' => 'expenses/default',
+    			'controller' => 'index',
     			'pages' => array(
     				'expenses' => array(
     					'label' => 'Expenses',
-    					'route' => 'expenses',
-    					'controller' => 'Index',
-    					'action' => 'index'
+    					'route' => 'expenses/default',
+    					'controller' => 'index'
     				),
     			),
              ),
