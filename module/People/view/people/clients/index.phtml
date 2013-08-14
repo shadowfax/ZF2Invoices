@@ -1,8 +1,13 @@
-<h2><?php echo $this->translate("Clients"); ?></h2>
+<h2 class="pt"><?php echo $this->translate("Clients"); ?></h2>
+<a href="<?php echo $this->url('people/default', array('controller' => 'clients', 'action' => 'add'));?>" class="button large green create right  " style="">
+	<span><?php echo $this->translate("New Client"); ?></span>
+</a>
+<div class="clearb"></div>
 	
 <table class="table">
 <tr>
     <th><?php echo $this->translate("Organization")?></th>
+    <th>&nbsp;</th>
 </tr>
 <?php 
 	foreach ($customers as $client) : 
@@ -11,7 +16,9 @@
     <td>
     	<?php echo $this->escapeHtml($client->getName()); ?>
     </td>
-    
+    <td>
+    	<a href="<?php echo $this->url('people/default', array('controller' => 'clients', 'action' => 'edit', 'id' => $client->getId()));?>"><?php echo $this->translate("Edit")?></a>
+    </td>
 </tr>
 <?php
 	endforeach; 
