@@ -119,6 +119,37 @@ class Customer extends Form implements ObjectManagerAwareInterface
             )
         ));
         
+        $this->add(array(
+            'name' => 'phone',
+        	'options' => array(
+                'label' => 'Business Phone'
+            ),
+            'attributes' => array(
+        		'class'    => 'input-medium',
+            )
+        ));
+        
+        $this->add(array(
+            'name' => 'fax',
+        	'options' => array(
+                'label' => 'Fax'
+            ),
+            'attributes' => array(
+        		'class'    => 'input-medium',
+            )
+        ));
+        
+        $this->add(array(
+            'name' => 'notes',
+        	'type'    => 'Zend\Form\Element\Textarea',
+        	'options' => array(
+                'label' => 'Internal Notes'
+            ),
+            'attributes' => array(
+        		'class'    => 'input-xlarge',
+            	'rows'     => '5'
+            )
+        ));
         
 
         $this->add(array(

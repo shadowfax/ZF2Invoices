@@ -64,6 +64,7 @@ return array(
 						'route' => 'invoices/default',
     					'controller' => 'invoice'
     				),
+    				/*
     				'recurring' => array(
     					'label' => 'Recurring',
 						'route' => 'invoices/default',
@@ -74,6 +75,7 @@ return array(
 						'route' => 'invoices/default',
     					'controller' => 'Received',
     				),
+    				*/
     				'payments' => array(
     					'label' => 'Payments',
 						'route' => 'invoices/default',

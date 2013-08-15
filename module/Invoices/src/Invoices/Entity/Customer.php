@@ -61,7 +61,7 @@ class Customer
     
     /**
      * @var string
-     * @ORM\Column(type="string", length=255, nullable=false)
+     * @ORM\Column(type="string", length=20, nullable=false)
      */
     protected $zip;
     
@@ -72,6 +72,24 @@ class Customer
      */
     protected $country;
 
+    /**
+     * @var string
+     * @ORM\Column(type="string", length=30, nullable=true)
+     */
+    protected $phone;
+    
+    /**
+     * @var string
+     * @ORM\Column(type="string", length=30, nullable=true)
+     */
+    protected $fax;
+    
+    /**
+     * @var string
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $notes;
+    
     /**
      * Get id.
      *
@@ -270,4 +288,69 @@ class Customer
         $this->country = $country;
     }
     
+	/**
+     * Get phone.
+     *
+     * @return string
+     */
+    public function getPhone()
+    {
+        return $this->phone;
+    }
+
+    /**
+     * Set phone.
+     *
+     * @param string $phone
+     *
+     * @return void
+     */
+    public function setPhone($phone)
+    {
+        $this->phone = $phone;
+    }
+    
+	/**
+     * Get fax.
+     *
+     * @return string
+     */
+    public function getFax()
+    {
+        return $this->fax;
+    }
+
+    /**
+     * Set fax.
+     *
+     * @param string $fax
+     *
+     * @return void
+     */
+    public function setFax($fax)
+    {
+        $this->fax = $fax;
+    }
+    
+	/**
+     * Get notes.
+     *
+     * @return string
+     */
+    public function getNotes()
+    {
+        return $this->notes;
+    }
+
+    /**
+     * Set notes.
+     *
+     * @param string $notes
+     *
+     * @return void
+     */
+    public function setNotes($notes)
+    {
+        $this->notes = $notes;
+    }
 }

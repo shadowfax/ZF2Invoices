@@ -27,12 +27,31 @@ CREATE TABLE IF NOT EXISTS `addressbook` (
   KEY `IDX_CUSTOMER` (`customer_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
-CREATE TABLE IF NOT EXISTS `customers` (
+CREATE TABLE IF NOT EXISTS `clients` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
-  `tax_id` varchar(15) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `tax_id` varchar(15) DEFAULT NULL COMMENT 'The Tax / Fiscal ID of the organization or person, e.g. the TIN in the US or the CIF/NIF in Spain.',
+  `street` varchar(255) NOT NULL,
+  `street2` varchar(255) DEFAULT NULL,
+  `locality` varchar(255) NOT NULL,
+  `region` varchar(255) NOT NULL,
+  `zip` varchar(20) NOT NULL,
+  `country_iso` char(2) NOT NULL,
+  `phone` varchar(30) DEFAULT NULL,
+  `fax` varchar(30) DEFAULT NULL,
+  `notes` longtext,
+  PRIMARY KEY (`id`),
+  KEY `IDX_COUNTRY` (`country_iso`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `countries` (
+  `iso` char(2) NOT NULL,
+  `english_name` varchar(80) NOT NULL,
+  `iso3` char(3) DEFAULT NULL,
+  `numcode` smallint(6) DEFAULT NULL,
+  PRIMARY KEY (`iso`),
+  UNIQUE KEY `english_name` (`english_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='ISO 3166 - Countries';
 
 CREATE TABLE IF NOT EXISTS `options` (
   `key` varchar(64) NOT NULL,
@@ -102,7 +121,10 @@ CREATE TABLE IF NOT EXISTS `user_role_linker` (
 
 
 ALTER TABLE `addressbook`
-  ADD CONSTRAINT `fk_customer_id` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`);
+  ADD CONSTRAINT `fk_customer_id` FOREIGN KEY (`customer_id`) REFERENCES `clients` (`id`);
+
+ALTER TABLE `clients`
+  ADD CONSTRAINT `fk_country` FOREIGN KEY (`country_iso`) REFERENCES `countries` (`iso`);
 
 ALTER TABLE `products`
   ADD CONSTRAINT `fk_tax_id` FOREIGN KEY (`tax_id`) REFERENCES `taxes` (`id`);
