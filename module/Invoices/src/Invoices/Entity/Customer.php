@@ -9,7 +9,8 @@ use Doctrine\ORM\Mapping as ORM;
  * An example of how to implement a role aware user entity.
  *
  * @ORM\Entity
- * @ORM\Table(name="customers")
+ * @ORM\Table(name="clients")
+ * @ORM\MappedSuperClass
  *
  */
 class Customer 
@@ -24,7 +25,7 @@ class Customer
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=255, unique=true, nullable=true)
+     * @ORM\Column(type="string", length=255, unique=true, nullable=false)
      */
     protected $name;
 
@@ -35,18 +36,41 @@ class Customer
     protected $tax_id;
     
     /**
-     * @var \Doctrine\Common\Collections\Collection
-     * @ORM\OneToMany(targetEntity="Invoices\Entity\Address", mappedBy="customer_id")
+     * @var string
+     * @ORM\Column(type="string", length=255, nullable=false)
      */
-    protected $addresses;
-
+    protected $street;
+    
     /**
-     * Initialies the addresses variable.
+     * @var string
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
-    public function __construct()
-    {
-        $this->addresses = new ArrayCollection();
-    }
+    protected $street2;
+    
+    /**
+     * @var string
+     * @ORM\Column(type="string", length=255, nullable=false)
+     */
+    protected $locality;
+    
+    /**
+     * @var string
+     * @ORM\Column(type="string", length=255, nullable=false)
+     */
+    protected $region;
+    
+    /**
+     * @var string
+     * @ORM\Column(type="string", length=255, nullable=false)
+     */
+    protected $zip;
+    
+    
+    /**
+     * @ORM\OneToOne(targetEntity="Country")
+     * @ORM\JoinColumn(name="country_iso", referencedColumnName="iso")
+     */
+    protected $country;
 
     /**
      * Get id.
@@ -113,27 +137,137 @@ class Customer
     {
         $this->tax_id = $taxid;
     }
-
     
-    /**
-     * Get addresses.
+	/**
+     * Get street.
      *
-     * @return array
+     * @return string
      */
-    public function getAddresses()
+    public function getStreet()
     {
-        return $this->addresses->getValues();
+        return $this->street;
     }
 
     /**
-     * Add an address role to the customer.
+     * Set street.
      *
-     * @param Address $role
+     * @param string $street
      *
      * @return void
      */
-    public function addAddress($address)
+    public function setStreet($street)
     {
-        $this->addresses[] = $address;
+        $this->street = $street;
     }
+    
+	/**
+     * Get street 2.
+     *
+     * @return string
+     */
+    public function getStreet2()
+    {
+        return $this->street2;
+    }
+
+    /**
+     * Set street 2.
+     *
+     * @param string $street
+     *
+     * @return void
+     */
+    public function setStreet2($street)
+    {
+        $this->street2 = $street;
+    }
+    
+	/**
+     * Get locality.
+     *
+     * @return string
+     */
+    public function getLocality()
+    {
+        return $this->locality;
+    }
+
+    /**
+     * Set locality.
+     *
+     * @param string $locality
+     *
+     * @return void
+     */
+    public function setLocality($locality)
+    {
+        $this->locality = $locality;
+    }
+    
+	/**
+     * Get region.
+     *
+     * @return string
+     */
+    public function getRegion()
+    {
+        return $this->region;
+    }
+
+    /**
+     * Set region.
+     *
+     * @param string $region
+     *
+     * @return void
+     */
+    public function setRegion($region)
+    {
+        $this->region = $region;
+    }
+
+	/**
+     * Get zip.
+     *
+     * @return string
+     */
+    public function getZip()
+    {
+        return $this->zip;
+    }
+
+    /**
+     * Set zip.
+     *
+     * @param string $zip
+     *
+     * @return void
+     */
+    public function setZip($zip)
+    {
+        $this->zip = $zip;
+    }
+    
+	/**
+     * Get country.
+     *
+     * @return \Invoices\Entity\Country
+     */
+    public function getCountry()
+    {
+        return $this->country;
+    }
+
+    /**
+     * Set country.
+     *
+     * @param \Invoices\Entity\Country $country
+     *
+     * @return void
+     */
+    public function setCountry($country)
+    {
+        $this->country = $country;
+    }
+    
 }

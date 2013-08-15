@@ -20,6 +20,21 @@ h2.pt {
 	margin-bottom: 0;
 }
 
+h3 {
+	font-family: Arial,Helvetica,sans-serif;
+	font-size: 18px;
+	color: #000;
+	line-height: 24px;
+	padding: 0;
+	margin: 0 0 7px 0;
+	display: block;
+	-webkit-margin-before: 1em;
+	-webkit-margin-after: 1em;
+	-webkit-margin-start: 0px;
+	-webkit-margin-end: 0px;
+	font-weight: bold;
+}
+
 #globalheader {
 	min-height:77px;
 }
@@ -133,8 +148,47 @@ div.container a.brand {
 	padding-top: 36px;
 }
 
+.form-horizontal .section-header {
+	border-top: solid 4px #e5e5e5;
+}
+.form-horizontal .section-header, .form-horizontal .section-header-plain {
+	padding-bottom: 18px;
+	padding-top: 18px;
+	padding-left: 180px;
+}
+
+.formTextMed {
+	width: 150px;
+}
+
 .input-mini {
 	width: 72px;
+}
+
+.input-medium {
+	width: 112px;
+}
+
+.input-xxlarge {
+	width: 412px;
+}
+
+.append-bottom-1 {
+	padding-bottom: 18px;
+}
+
+div.span-1, div.span-2, div.span-3, div.span-4, div.span-5, div.span-6, div.span-7, div.span-8, div.span-9, div.span-10, div.span-11, div.span-12, div.span-13, div.span-14, div.span-15, div.span-16, div.span-17, div.span-18, div.span-19, div.span-20, div.span-21, div.span-22, div.span-23, div.span-24, div.span-25, div.span-26, div.span-27, div.span-28, div.span-29, div.span-30, div.span-31, div.span-32, div.span-33, div.span-34, div.span-35, div.span-36, div.span-37 {
+	float: left;
+	margin-left:0;
+	min-height: 1px;
+	
+}
+.span-7 {
+	width: 140px;
+}
+
+.span-10 {
+	width: 200px;
 }
 
 .clearb {clear:both;height:0px;padding:0;margin:0;}

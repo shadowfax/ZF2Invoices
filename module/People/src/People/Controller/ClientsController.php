@@ -5,6 +5,7 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Doctrine\ORM\EntityManager;
 use Invoices\Entity\Customer;
+use Invoices\Entity\Country;
 use People\Form\Customer as CustomerForm;
 
 class ClientsController extends AbstractActionController
@@ -29,6 +30,17 @@ class ClientsController extends AbstractActionController
             $this->entityManager = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
         }
         return $this->entityManager;
+    }
+    
+    protected function getCountriesForCombobox()
+    {
+    	$resultset = array();
+    	
+    	$countries = $this->getEntityManager()->getRepository('Invoices\Entity\Country')->findAll();
+    	foreach($countries as $country) {
+    		$resultset[$country->getIso()] = $country->getEnglishName();
+    	}
+    	return $resultset;
     }
     
     public function indexAction()
@@ -56,14 +68,22 @@ class ClientsController extends AbstractActionController
         
     	// TODO: sanity checks
     	
-    	$form = new CustomerForm();
+    	$form = new CustomerForm($this->getEntityManager());
 		$form->bind($customer);
+		
+		//$form->get('customer')->get('countryIso')->setValueOptions($this->getCountriesForCombobox());
 
 		if ($this->request->isPost()) {
 			$form->setData($this->request->getPost());
 
 			if ($form->isValid()) {
-				var_dump($customer);
+				// Get the country
+				$country = $this->getEntityManager()->getRepository('Invoices\Entity\Country')->findOneBy(array('iso' => $customer->getCountry()));
+				$customer->setCountry( $country );
+				
+				$this->getEntityManager()->persist($customer);
+				$this->getEntityManager()->flush($customer);
+				return $this->redirect()->toRoute('people/default', array('controller' => 'clients'));
 			}
 		}
 
@@ -75,7 +95,7 @@ class ClientsController extends AbstractActionController
     
     public function addAction()
     {
-    	$form = new CustomerForm();
+    	$form = new CustomerForm($this->getEntityManager());
 		$customer = new Customer();
 		$form->bind($customer);
 
@@ -83,7 +103,13 @@ class ClientsController extends AbstractActionController
 			$form->setData($this->request->getPost());
 
 			if ($form->isValid()) {
-				var_dump($customer);
+				// Get the country
+				$country = $this->getEntityManager()->getRepository('Invoices\Entity\Country')->findOneBy(array('iso' => $customer->getCountry()));
+				$customer->setCountry( $country );
+				
+				$this->getEntityManager()->persist($customer);
+				$this->getEntityManager()->flush($customer);
+				return $this->redirect()->toRoute('people/default', array('controller' => 'clients'));
 			}
 		}
 

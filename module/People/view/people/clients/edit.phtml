@@ -1,17 +1,85 @@
-<h2><?php echo $this->translate("Update Client: ")?> <?php echo $customer->getName(); ?></h2>
+<h2 class="pt"><?php echo $this->translate("Update Client: ")?> <?php echo $customer->getName(); ?></h2>
+<div class="clearb"></div>
 <?php
-$form->setAttribute('action', $this->url('home'))
+$form->setAttribute('action', $this->url('people/default', array('controller' => 'clients', 'action' => 'edit', 'id' => $customer->getId())))
      ->prepare();
 
 echo $this->form()->openTag($form);
 
-$customer = $form->get('customer');
+// NAME
+$element = $form->get('name');
+?>
+<div class="control-group section-start<?php if($this->formElementErrors($element)) echo " error" ?>">
+    <label class="control-label"><?php echo $element->getLabel() ?></label>
+    <div class="controls">
+        <?php echo $this->formElement($element);
+        if($this->formElementErrors($element)) ?>
+                    <span class="help-inline"><?php echo $this->formElementErrors($element) ?></span>
+    </div>
+</div>
+<?php 
+$element = $form->get('taxId');
+?>
+<div class="control-group <?php if($this->formElementErrors($element)) echo " error" ?>">
+    <label class="control-label"><?php echo $element->getLabel() ?></label>
+    <div class="controls">
+        <?php echo $this->formElement($element);
+        if($this->formElementErrors($element)) ?>
+                    <span class="help-inline"><?php echo $this->formElementErrors($element) ?></span>
+    </div>
+</div>
 
-echo $this->formRow($customer->get('name'));
-echo $this->formRow($customer->get('taxId'));
-echo $this->formCollection($customer->get('addresses'));
+<h3 class="section-header"><?php echo $this->translate("Details")?></h3>
+<?php 
+$element = $form->get('country');
+?>
+<div class="control-group <?php if($this->formElementErrors($element)) echo " error" ?>">
+    <label class="control-label"><?php echo $element->getLabel() ?></label>
+    <div class="controls">
+        <?php echo $this->formElement($element);
+        if($this->formElementErrors($element)) ?>
+                    <span class="help-inline"><?php echo $this->formElementErrors($element) ?></span>
+    </div>
+</div>
 
+<div class="control-group">
+		<label class="control-label"><?php echo $form->get('street')->getLabel() ?></label>
+		<div class="controls">
+			<div class="append-bottom-1">
+				<?php echo $this->formElement($form->get('street'))?>
+				<div class="example"><?php echo $this->translate("Street 1")?></div>
+			</div>
+
+			<div class="append-bottom-1">
+				<?php echo $this->formElement($form->get('street2'))?>
+				<div class="example"><?php echo $this->translate("Street 2")?></div>
+			</div>
+
+			<div class="span-7">
+				<?php echo $this->formElement($form->get('locality'))?>
+				<div class="example"><?php echo $this->translate("City")?></div>
+			</div>
+
+			<div class="span-10">
+				<?php echo $this->formElement($form->get('region'))?>
+				<div class="example"><?php echo $this->translate("Province/State")?></div>
+			</div>
+
+			<div class="span-7">
+				<?php echo $this->formElement($form->get('zip'))?>
+				<div class="example"><?php echo $this->translate("Postal/Zip Code")?></div>
+			</div>
+		</div>
+	</div>
+<?php
+// CSRF 
 echo $this->formHidden($form->get('csrf'));
-echo $this->formElement($form->get('submit'));
-
+?>
+<div class="submit-container">
+	<span class="button large inline green">
+		<?php echo $this->formElement($form->get('submit')); ?>
+	</span>
+</div>
+<?php 
 echo $this->form()->closeTag();
+     
