@@ -43,6 +43,18 @@ class ItemsController extends AbstractActionController
 		return $resultset;
     }
     
+    public function getItemTypesForCombobox()
+    {
+    	$resultset = array();
+    	
+    	$query = $this->getEntityManager()->createQuery('SELECT DISTINCT p.item_type FROM Invoices\Entity\Product p');
+		$item_types = $query->getResult();
+		foreach($item_types as $item_type) {
+			$resultset[strtolower($item_type['item_type'])] = ucfirst($item_type['item_type']);
+		}
+		return $resultset;
+    }
+    
     public function indexAction()
     {
         // TODO: Use paginator
@@ -60,6 +72,7 @@ class ItemsController extends AbstractActionController
 		$form->bind($product);
 	
 		$form->get('product')->get('taxId')->setValueOptions($this->getTaxesForCombobox());
+		$form->get('product')->get('itemType')->setValueOptions($this->getItemTypesForCombobox());
 
 		if ($this->request->isPost()) {
 			$form->setData($this->request->getPost());
@@ -96,7 +109,8 @@ class ItemsController extends AbstractActionController
 		$form->bind($product);
 	
 		$form->get('product')->get('taxId')->setValueOptions($this->getTaxesForCombobox());
-
+		$form->get('product')->get('itemType')->setValueOptions($this->getItemTypesForCombobox());
+		
 		if ($this->request->isPost()) {
 			$form->setData($this->request->getPost());
 

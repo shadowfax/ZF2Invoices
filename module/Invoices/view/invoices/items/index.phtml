@@ -7,6 +7,7 @@
 <table class="table">
 <tr>
     <th><?php echo $this->translate("Name")?></th>
+    <th><?php echo $this->translate("Type")?></th>
     <th><?php echo $this->translate("Price")?></th>
     <th>&nbsp;</th>
 </tr>
@@ -16,6 +17,18 @@
 <tr>
     <td>
     	<?php echo $this->escapeHtml($product->getName()); ?>
+    </td>
+    <td>
+    	<?php 
+    		if ($product->isProduct()) {
+    			echo $this->translate("Product");
+    		} elseif ($product->isService()) {
+    			echo $this->translate("Service");
+    		} else {
+    			// Custom type
+    			echo ucfirst($this->getItemType());
+    		}
+    	?>
     </td>
     <td>
     	<?php echo sprintf('%0.2f', round($product->getUnitPrice(),2)); ?>

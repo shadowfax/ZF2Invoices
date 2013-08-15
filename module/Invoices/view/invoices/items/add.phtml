@@ -30,3 +30,18 @@ echo $this->formHidden($form->get('csrf'));
 </div>
 <?php 
 echo $this->form()->closeTag();
+?>
+
+<script type="text/javascript">
+	if ($('select[name="product[itemType]"]').val() == 'service') {
+		$('input[name="product[unitCost]"]').closest('.control-group').hide();
+	}
+	
+    $('select[name="product[itemType]"]').change(function(){
+        if ($(this).val() == 'service') {
+            $('input[name="product[unitCost]"]').closest('.control-group').hide();
+        } else {
+        	$('input[name="product[unitCost]"]').closest('.control-group').show();
+        }
+    });
+</script>

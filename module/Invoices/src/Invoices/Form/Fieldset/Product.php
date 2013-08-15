@@ -14,6 +14,7 @@ class Product extends Fieldset implements InputFilterProviderInterface
         $this->setHydrator(new ClassMethodsHydrator(false))
              ->setObject(new ProductEntity());
 
+		
         $this->add(array(
             'name' => 'name',
             'options' => array(
@@ -26,6 +27,17 @@ class Product extends Fieldset implements InputFilterProviderInterface
                 'required' => 'required'
             )
         ));
+        
+        $this->add(array(
+			'name' => 'itemType',
+			'type'  => 'Zend\Form\Element\Select',
+        	'options' => array(
+                'label' => 'Item Type',
+        		'label_attributes' => array(
+        			'class' => 'control-label'
+        		)
+            ),
+		));
 
         $this->add(array(
             'name' => 'description',

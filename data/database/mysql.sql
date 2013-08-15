@@ -47,8 +47,10 @@ CREATE TABLE IF NOT EXISTS `products` (
   `unit_price` decimal(21,2) NOT NULL COMMENT 'Unit price',
   `unit_cost` decimal(21,2) NOT NULL DEFAULT '0.00',
   `tax_id` int(10) unsigned NOT NULL,
+  `item_type` varchar(20) NOT NULL DEFAULT 'product',
   PRIMARY KEY (`id`),
-  KEY `IDX_TAX_ID` (`tax_id`)
+  KEY `IDX_TAX_ID` (`tax_id`),
+  KEY `IDX_ITEM_TYPE` (`item_type`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `sessions` (

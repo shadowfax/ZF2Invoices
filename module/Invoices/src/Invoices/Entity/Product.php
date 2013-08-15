@@ -51,6 +51,12 @@ class Product
      */
     protected $tax_id;
     
+    /**
+     * @var string
+     * @ORM\Column(type="string", length=20, nullable=false)
+     */
+    protected $item_type = 'product';
+    
 	/**
      * Get id.
      *
@@ -171,5 +177,53 @@ class Product
     	$this->tax_id = $taxid;
     }
     
-	
+	/**
+     * Get item type.
+     *
+     * @return string
+     */
+    public function getItemType()
+    {
+        return $this->item_type;
+    }
+
+    /**
+     * Set item type.
+     *
+     * @param string $type
+     *
+     * @return void
+     */
+    public function setItemType($type)
+    {
+        $this->item_type = strtolower($type);
+    }
+    
+    /**
+     * Check if it is a service
+     * 
+     * @return bool
+     */
+    public function isService()
+    {
+    	if (strcasecmp($this->item_type, 'service') === 0) {
+    		return true;
+    	}
+    	return false;
+    }
+    
+	/**
+     * Check if it is a product
+     * 
+     * @return bool
+     */
+    public function isProduct()
+    {
+    	if (strcasecmp($this->item_type, 'product') === 0) {
+    		return true;
+    	}
+    	return false;
+    }
+    
+    
 }
