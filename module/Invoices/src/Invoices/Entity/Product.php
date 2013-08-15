@@ -34,15 +34,15 @@ class Product
     
     /**
      * @var float
-     * @ORM\Column(type="decimal", precision=25, scale=6, nullable=false)
+     * @ORM\Column(type="decimal", precision=21, scale=2, nullable=false)
      */
     protected $unit_price;
     
     /**
      * @var float
-     * @ORM\Column(type="decimal", precision=25, scale=6, nullable=true)
+     * @ORM\Column(type="decimal", precision=21, scale=2, nullable=true)
      */
-    protected $unit_cost = '0.0';
+    protected $unit_cost;
     
     
     /**

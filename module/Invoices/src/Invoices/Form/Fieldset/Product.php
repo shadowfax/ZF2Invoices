@@ -17,7 +17,10 @@ class Product extends Fieldset implements InputFilterProviderInterface
         $this->add(array(
             'name' => 'name',
             'options' => array(
-                'label' => 'Name'
+                'label' => 'Item Name',
+                'label_attributes' => array(
+        			'class' => 'control-label'
+        		)
             ),
             'attributes' => array(
                 'required' => 'required'
@@ -26,17 +29,25 @@ class Product extends Fieldset implements InputFilterProviderInterface
 
         $this->add(array(
             'name' => 'description',
+        	'type'  => 'Zend\Form\Element\TextArea',
             'options' => array(
-                'label' => 'Description'
+                'label' => 'Description',
+                'label_attributes' => array(
+        			'class' => 'control-label'
+        		)
             ),
         ));
         
         $this->add(array(
             'name' => 'unitPrice',
             'options' => array(
-                'label' => 'Price'
+                'label' => 'Unit Price',
+        		'label_attributes' => array(
+        			'class' => 'control-label'
+        		)
             ),
             'attributes' => array(
+            	'class'    => 'input-mini',
                 'required' => 'required'
             )
         ));
@@ -44,13 +55,25 @@ class Product extends Fieldset implements InputFilterProviderInterface
         $this->add(array(
             'name' => 'unitCost',
             'options' => array(
-                'label' => 'Cost'
+                'label' => 'Unit Cost',
+        		'label_attributes' => array(
+        			'class' => 'control-label'
+        		)
             ),
+            'attributes' => array(
+            	'class'    => 'input-mini'
+            )
         ));
         
         $this->add(array(
 			'name' => 'taxId',
 			'type'  => 'Zend\Form\Element\Select',
+        	'options' => array(
+                'label' => 'Tax',
+        		'label_attributes' => array(
+        			'class' => 'control-label'
+        		)
+            ),
 		));
         
     }

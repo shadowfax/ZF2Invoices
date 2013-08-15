@@ -12,6 +12,7 @@ class Product extends Form
         parent::__construct('product');
 
         $this->setAttribute('method', 'post')
+             ->setAttribute('class', 'form-horizontal')
              ->setHydrator(new ClassMethodsHydrator(false))
              ->setInputFilter(new InputFilter());
 
@@ -30,8 +31,9 @@ class Product extends Form
         $this->add(array(
             'name' => 'submit',
             'attributes' => array(
+        		'class' => 'green',
                 'type' => 'submit',
-                'value' => 'Send'
+                'value' => 'Save'
             )
         ));
     }

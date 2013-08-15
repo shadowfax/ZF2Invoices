@@ -1,5 +1,5 @@
-<h2><?php echo $this->translate("New Item");?></h2>
-
+<h2 class="pt"><?php echo $this->translate("Edit Item");?></h2>
+<div class="clearb"></div>
 <?php
 $form->setAttribute('action', $this->url('invoices/default', array('controller' => 'items', 'action' => 'edit', 'id' => $item->getId())))
      ->prepare();
@@ -7,14 +7,27 @@ $form->setAttribute('action', $this->url('invoices/default', array('controller' 
 echo $this->form()->openTag($form);
 
 $product = $form->get('product');
-
-echo $this->formRow($product->get('name'));
-echo $this->formRow($product->get('description'));
-echo $this->formRow($product->get('unitPrice'));
-echo $this->formRow($product->get('unitCost'));
-echo $this->formRow($product->get('taxId'));
-
+$is_start = true;
+foreach ($product as $element) : ?>
+<div class="control-group<?php if($is_start) echo " section-start" ?><?php if($this->formElementErrors($element)) echo " error" ?>">
+    <label class="control-label"><?php echo $element->getLabel() ?></label>
+    <div class="controls">
+        <?php echo $this->formElement($element);
+        if($this->formElementErrors($element)) ?>
+                    <span class="help-inline"><?php echo $this->formElementErrors($element) ?></span>
+    </div>
+</div>
+<?php 
+	$is_start = false;
+endforeach;
+ 
 echo $this->formHidden($form->get('csrf'));
-echo $this->formElement($form->get('submit'));
-
+?>
+<div class="submit-container">
+	<span class="button large inline green">
+		<?php echo $this->formElement($form->get('submit')); ?>
+	</span>
+</div>
+<?php 
 echo $this->form()->closeTag();
+

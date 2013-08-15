@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS `addressbook` (
 CREATE TABLE IF NOT EXISTS `customers` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
-  `tax_id` varchar(15) NOT NULL,
+  `tax_id` varchar(15) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
@@ -39,6 +39,17 @@ CREATE TABLE IF NOT EXISTS `options` (
   `value` text,
   PRIMARY KEY (`key`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `products` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `description` text,
+  `unit_price` decimal(21,2) NOT NULL COMMENT 'Unit price',
+  `unit_cost` decimal(21,2) NOT NULL DEFAULT '0.00',
+  `tax_id` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_TAX_ID` (`tax_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `sessions` (
   `id` char(32) NOT NULL DEFAULT '',
@@ -90,6 +101,9 @@ CREATE TABLE IF NOT EXISTS `user_role_linker` (
 
 ALTER TABLE `addressbook`
   ADD CONSTRAINT `fk_customer_id` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`);
+
+ALTER TABLE `products`
+  ADD CONSTRAINT `fk_tax_id` FOREIGN KEY (`tax_id`) REFERENCES `taxes` (`id`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

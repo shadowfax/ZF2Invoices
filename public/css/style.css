@@ -95,4 +95,46 @@ div.container a.brand {
     padding: 8px 20px 12px 40px;
 }
 
+.form-horizontal .control-group {
+	margin-bottom: 18px;
+	padding-top: 4px;
+}
+
+.form-horizontal .control-label {
+	float: left;
+	font-weight: bold;
+	line-height: 18px;
+	padding-right: 20px;
+	text-align: right;
+	width: 160px;
+}
+.form-horizontal label {
+	line-height: inherit;
+}
+
+.form-horizontal .controls {
+	margin-left: 180px;
+	position: relative;
+}
+
+.form-horizontal .submit-container {
+	margin-top: 36px;
+}
+.submit-container {
+	text-align: center!important;
+}
+.form-horizontal input, .form-horizontal textarea, .form-horizontal select {
+	display: inline-block;
+	margin-bottom: 0;
+}
+
+.form-horizontal .section-start {
+	border-top: solid 4px #e5e5e5;
+	padding-top: 36px;
+}
+
+.input-mini {
+	width: 72px;
+}
+
 .clearb {clear:both;height:0px;padding:0;margin:0;}

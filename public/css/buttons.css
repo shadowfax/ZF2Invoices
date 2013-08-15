@@ -61,8 +61,48 @@
 	line-height: 43px;
 }
 
+.button.large input {
+	font: bold 18px Arial,Helvetica,sans-serif;
+	color: #fff;
+	background: 0;
+	padding: 0 20px;
+	border: 0;
+	outline: 0;
+	cursor: pointer;
+	width: 228px;
+	height: 43px;
+}
+
+.button.large.inline {
+	margin: 0 4px;
+	vertical-align: baseline;
+}
+
+.button.large.inline input {
+	min-width: 228px;
+	width: auto;
+}
+
 .button.large.green {
 	background-position: left -298px;
+}
+
+.button.large.green input {
+	-webkit-text-shadow: 0 0 1px rgba(0,0,0,0.4);
+	-moz-text-shadow: 0 0 1px rgba(0,0,0,0.4);
+	text-shadow: 0 0 1px rgba(0,0,0,0.4);
+}
+
+.button.inline {
+	float: none;
+	display: inline-block;
+	vertical-align: middle;
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+.green {
+	color: #628e0e;
 }
 
 .button.green {
