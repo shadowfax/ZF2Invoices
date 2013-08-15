@@ -191,4 +191,11 @@ div.span-1, div.span-2, div.span-3, div.span-4, div.span-5, div.span-6, div.span
 	width: 200px;
 }
 
+.example {
+	color: #888;
+	font-size: 11px;
+	line-height: 16px;
+	margin-top: 5px;
+}
+
 .clearb {clear:both;height:0px;padding:0;margin:0;}
