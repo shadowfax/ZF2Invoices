@@ -8,6 +8,7 @@ return array(
             'BjyAuthorize\Provider\Resource\Config' => array(
                 'people'   => array(),
 				'expenses' => array(),
+				'invoices' => array(),
 				'invoices/items' => array(),
 				'invoices/payments' => array(),
             ),
@@ -25,9 +26,10 @@ return array(
         			// allow guests and users (and admins, through inheritance)
                     // the "wear" privilege on the resource "pants"
                     array(array('biller'), 'people'),
-                    array(array('staff'), 'expenses'),
+                    array(array('accountant' , 'staff'), 'expenses'),
                     array(array('biller'), 'invoices/payments'),
                     array(array('biller'), 'invoices/items'),
+                    array(array('biller', 'customer', 'accountant'), 'invoices'),
                 ),
                 // Don't mix allow/deny rules if you are using role inheritance.
                 // There are some weird bugs.

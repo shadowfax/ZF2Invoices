@@ -58,11 +58,13 @@ return array(
 				'label' => 'Invoices',
 				'route' => 'invoices/default',
     			'controller' => 'invoice',
+    			'resource' => 'invoices',
     			'pages' => array(
     				'invoices' => array(
     					'label' => 'Invoices',
 						'route' => 'invoices/default',
-    					'controller' => 'invoice'
+    					'controller' => 'invoice',
+    					'resource' => 'invoices'
     				),
     				/*
     				'recurring' => array(
