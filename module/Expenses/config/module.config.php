@@ -54,6 +54,7 @@ return array(
 				'label' => 'Expenses',
 				'route' => 'expenses/default',
     			'controller' => 'index',
+    			'resource' => 'expenses',
     			'pages' => array(
     				'expenses' => array(
     					'label' => 'Expenses',

@@ -1,12 +1,3 @@
--- phpMyAdmin SQL Dump
--- version 4.0.4
--- http://www.phpmyadmin.net
---
--- Servidor: localhost
--- Tiempo de generación: 16-08-2013 a las 02:50:10
--- Versión del servidor: 5.6.12
--- Versión de PHP: 5.3.27
-
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
@@ -331,7 +322,6 @@ INSERT INTO `countries` (`iso`, `english_name`, `iso3`, `numcode`) VALUES
 ('ZM', 'Zambia', 'ZMB', 894),
 ('ZW', 'Zimbabwe', 'ZWE', 716);
 
-
 -- --------------------------------------------------------
 
 --
@@ -354,7 +344,6 @@ CREATE TABLE IF NOT EXISTS `expenses` (
   KEY `IDX_CATEGORY_ID` (`category_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
-
 -- --------------------------------------------------------
 
 --
@@ -367,7 +356,6 @@ CREATE TABLE IF NOT EXISTS `expenses_categories` (
   `description` text,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
 
 -- --------------------------------------------------------
 
@@ -447,6 +435,7 @@ CREATE TABLE IF NOT EXISTS `products` (
   KEY `IDX_ADDITIONAL_TAX_ID` (`additional_tax_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
+
 -- --------------------------------------------------------
 
 --
@@ -493,17 +482,19 @@ CREATE TABLE IF NOT EXISTS `users` (
   `displayname` varchar(50) DEFAULT NULL,
   `password` varchar(128) NOT NULL,
   `state` smallint(5) unsigned DEFAULT NULL,
+  `client_id` bigint(20) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`),
-  UNIQUE KEY `email` (`email`)
+  UNIQUE KEY `email` (`email`),
+  KEY `IDX_CLIENT_ID` (`client_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 --
 -- Volcado de datos para la tabla `users`
 --
 
-INSERT INTO `users` (`id`, `username`, `email`, `displayname`, `password`, `state`) VALUES
-(1, 'admin', 'root@zfinvoices.com', NULL, '$2y$14$Zfa3QIj/igUKS2RJDAeZqOVblraRFelfZuFRhMm0JyvSqhK4cjvma', NULL);
+INSERT INTO `users` (`id`, `username`, `email`, `displayname`, `password`, `state`, `client_id`) VALUES
+(1, 'admin', 'root@zfinvoices.com', NULL, '$2y$14$Zfa3QIj/igUKS2RJDAeZqOVblraRFelfZuFRhMm0JyvSqhK4cjvma', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -517,19 +508,21 @@ CREATE TABLE IF NOT EXISTS `user_role` (
   `is_default` tinyint(1) NOT NULL,
   `parent_id` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
 
 --
 -- Volcado de datos para la tabla `user_role`
 --
 
 INSERT INTO `user_role` (`id`, `roleId`, `is_default`, `parent_id`) VALUES
-(1, 'Customer', 0, NULL),
-(2, 'Accountant', 0, NULL),
-(3, 'Staff', 0, NULL),
-(4, 'Biller', 0, '3'),
-(5, 'Manager', 0, '4'),
-(6, 'Administrator', 0, '5');
+(1, 'guest', 1, NULL),
+(2, 'user', 0, NULL),
+(3, 'customer', 0, '2'),
+(4, 'accountant', 0, '2'),
+(5, 'staff', 0, '2'),
+(6, 'biller', 0, '5'),
+(7, 'manager', 0, '6'),
+(8, 'administrator', 0, '7');
 
 -- --------------------------------------------------------
 
@@ -549,7 +542,7 @@ CREATE TABLE IF NOT EXISTS `user_role_linker` (
 --
 
 INSERT INTO `user_role_linker` (`user_id`, `role_id`) VALUES
-(1, 6);
+(1, 8);
 
 --
 -- Restricciones para tablas volcadas
@@ -586,6 +579,12 @@ ALTER TABLE `invoices`
 ALTER TABLE `products`
   ADD CONSTRAINT `fk_additional_tax_id` FOREIGN KEY (`additional_tax_id`) REFERENCES `taxes` (`id`),
   ADD CONSTRAINT `fk_tax_id` FOREIGN KEY (`tax_id`) REFERENCES `taxes` (`id`);
+
+--
+-- Filtros para la tabla `users`
+--
+ALTER TABLE `users`
+  ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`client_id`) REFERENCES `clients` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

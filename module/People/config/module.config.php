@@ -56,6 +56,7 @@ return array(
 				'label' => 'People',
 				'route' => 'people/default',
     			'controller' => 'clients',
+    			'resource' => 'people',
     			'pages' => array(
     				'clients' => array(
     					'label' => 'Clients',

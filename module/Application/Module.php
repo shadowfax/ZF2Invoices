@@ -73,6 +73,13 @@ class Module
 
             return $response;
         }, -100);
+        
+        // Add ACL information to the Navigation view helper
+        $authorize = $serviceManager->get('BjyAuthorize\Service\Authorize');
+        $acl       = $authorize->getAcl();
+        $role      = $authorize->getIdentity();
+        \Zend\View\Helper\Navigation::setDefaultAcl($acl);
+        \Zend\View\Helper\Navigation::setDefaultRole($role);
     }
 
 	public function init(ModuleManager $moduleManager)

@@ -63,6 +63,12 @@ class User implements UserInterface, ProviderInterface
     protected $roles;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Invoices\Entity\Customer")
+     * @ORM\JoinColumn(name="client_id", referencedColumnName="id", nullable=true)
+     */
+    protected $client;
+    
+    /**
      * Initialies the roles variable.
      */
     public function __construct()
@@ -222,5 +228,27 @@ class User implements UserInterface, ProviderInterface
     public function addRole($role)
     {
         $this->roles[] = $role;
+    }
+    
+    /**
+     * Get the client id if exists
+     * 
+     * @return \Invoices\Entity\Client|null
+     */
+    public function getClient()
+    {
+    	return $this->client;
+    }
+    
+    /**
+     * Set the client if necesary.
+     * 
+     * @param \Invoices\Entity\Client $client
+     * 
+     * @return void
+     */
+    public function setClient($client)
+    {
+    	$this->client = $client;
     }
 }

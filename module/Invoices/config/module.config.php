@@ -79,12 +79,14 @@ return array(
     				'payments' => array(
     					'label' => 'Payments',
 						'route' => 'invoices/default',
-    					'controller' => 'Payments',
+    					'controller' => 'payments',
+    					'resource' => 'invoices/payments',
     				),
     				'items' => array(
     					'label' => 'Items',
 						'route' => 'invoices/default',
     					'controller' => 'items',
+    					'resource' => 'invoices/items',
     				),
     			),
              ),
