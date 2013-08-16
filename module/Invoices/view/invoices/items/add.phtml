@@ -6,9 +6,8 @@ $form->setAttribute('action', $this->url('invoices/default', array('controller' 
 
 echo $this->form()->openTag($form);
 
-$product = $form->get('product');
 $is_start = true;
-foreach ($product as $element) : ?>
+foreach ($form as $element) : ?>
 <div class="control-group<?php if($is_start) echo " section-start" ?><?php if($this->formElementErrors($element)) echo " error" ?>">
     <label class="control-label"><?php echo $element->getLabel() ?></label>
     <div class="controls">

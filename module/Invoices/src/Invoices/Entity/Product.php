@@ -44,12 +44,17 @@ class Product
      */
     protected $unit_cost;
     
+    /**
+     * @ORM\OneToOne(targetEntity="Invoices\Entity\Tax")
+     * @ORM\JoinColumn(name="tax_id", referencedColumnName="id")
+     */
+    protected $tax;
     
     /**
-     * @var int
-     * @ORM\Column(type="integer", nullable=false)
+     * @ORM\OneToOne(targetEntity="Invoices\Entity\Tax")
+     * @ORM\JoinColumn(name="additional_tax_id", referencedColumnName="id", nullable=true)
      */
-    protected $tax_id;
+    protected $additional_tax;
     
     /**
      * @var string
@@ -167,14 +172,24 @@ class Product
         $this->unit_cost = $price;
     }
 
-    public function getTaxId()
+    public function getTax()
     {
-    	return $this->tax_id;
+    	return $this->tax;
     }
     
-    public function setTaxId($taxid)
+    public function setTax($tax)
     {
-    	$this->tax_id = $taxid;
+    	$this->tax = $tax;
+    }
+    
+	public function getAdditionalTax()
+    {
+    	return $this->additional_tax;
+    }
+    
+    public function setAdditionalTax($tax)
+    {
+    	$this->additional_tax = $tax;
     }
     
 	/**

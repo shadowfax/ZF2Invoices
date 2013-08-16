@@ -31,18 +31,6 @@ class ItemsController extends AbstractActionController
         return $this->entityManager;
     }
     
-    public function getTaxesForCombobox()
-    {
-    	$resultset = array();
-    	
-    	$taxes = $this->getEntityManager()->getRepository('Invoices\Entity\Tax')->findAll();
-		foreach ($taxes as $tax) {
-			$resultset[$tax->getId()] = $tax->getDescription() . ' (' . $tax->getPercentage() . '%)';
-		}
-
-		return $resultset;
-    }
-    
     public function getItemTypesForCombobox()
     {
     	$resultset = array();
@@ -67,12 +55,11 @@ class ItemsController extends AbstractActionController
     
 	public function addAction()
     {
-        $form = new ProductForm();
+        $form = new ProductForm( $this->getEntityManager() );
 		$product = new ProductEntity();
 		$form->bind($product);
 	
-		$form->get('product')->get('taxId')->setValueOptions($this->getTaxesForCombobox());
-		$form->get('product')->get('itemType')->setValueOptions($this->getItemTypesForCombobox());
+		$form->get('itemType')->setValueOptions($this->getItemTypesForCombobox());
 
 		if ($this->request->isPost()) {
 			$form->setData($this->request->getPost());
@@ -82,6 +69,20 @@ class ItemsController extends AbstractActionController
 				if (empty($unit_cost)) {
 					$product->setUnitCost(0.0);
 				}
+				
+				// TAX
+				$tax = $this->getEntityManager()->getRepository('Invoices\Entity\Tax')->findOneBy(array('id' => $product->getTax()));
+				$product->setTax( $tax );
+				
+				// Additional TAX
+				$additional_tax = $product->getAdditionalTax();
+				if (!empty($additional_tax)) {
+					$additional_tax = $this->getEntityManager()->getRepository('Invoices\Entity\Tax')->findOneBy(array('id' => $additional_tax));
+					$product->setAdditionalTax( $additional_tax );
+				} else {
+					$product->setAdditionalTax(null);
+				}
+				
 				$this->getEntityManager()->persist($product);
 				$this->getEntityManager()->flush($product);
 				return $this->redirect()->toRoute('invoices/default', array('controller' => 'items'));
@@ -105,11 +106,10 @@ class ItemsController extends AbstractActionController
     	
         $product = $this->getEntityManager()->getRepository('Invoices\Entity\Product')->findOneBy(array('id' => $id));
         
-        $form = new ProductForm();
+        $form = new ProductForm( $this->getEntityManager() );
 		$form->bind($product);
 	
-		$form->get('product')->get('taxId')->setValueOptions($this->getTaxesForCombobox());
-		$form->get('product')->get('itemType')->setValueOptions($this->getItemTypesForCombobox());
+		$form->get('itemType')->setValueOptions($this->getItemTypesForCombobox());
 		
 		if ($this->request->isPost()) {
 			$form->setData($this->request->getPost());
@@ -119,6 +119,20 @@ class ItemsController extends AbstractActionController
 				if (empty($unit_cost)) {
 					$product->setUnitCost(0.0);
 				}
+				
+				// TAX
+				$tax = $this->getEntityManager()->getRepository('Invoices\Entity\Tax')->findOneBy(array('id' => $product->getTax()));
+				$product->setTax( $tax );
+				
+			// Additional TAX
+				$additional_tax = $product->getAdditionalTax();
+				if (!empty($additional_tax)) {
+					$additional_tax = $this->getEntityManager()->getRepository('Invoices\Entity\Tax')->findOneBy(array('id' => $additional_tax));
+					$product->setAdditionalTax( $additional_tax );
+				} else {
+					$product->setAdditionalTax(null);
+				}
+				
 				$this->getEntityManager()->persist($product);
 				$this->getEntityManager()->flush($product);
 				return $this->redirect()->toRoute('invoices/default', array('controller' => 'items'));
