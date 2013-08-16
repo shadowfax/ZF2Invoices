@@ -331,6 +331,44 @@ INSERT INTO `countries` (`iso`, `english_name`, `iso3`, `numcode`) VALUES
 ('ZM', 'Zambia', 'ZMB', 894),
 ('ZW', 'Zimbabwe', 'ZWE', 716);
 
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `expenses`
+--
+
+CREATE TABLE IF NOT EXISTS `expenses` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `date` date NOT NULL,
+  `category_id` bigint(20) unsigned NOT NULL,
+  `total_amount` decimal(21,2) NOT NULL,
+  `tax_percentage` decimal(4,1) NOT NULL,
+  `client_id` bigint(20) unsigned DEFAULT NULL,
+  `user_id` bigint(20) unsigned DEFAULT NULL COMMENT 'Allows a user to view or edit his expenses',
+  `creator_name` varchar(255) NOT NULL COMMENT 'In case the user gets deleted we must see this info',
+  `image` text,
+  `notes` text,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `IDX_CLIENT_ID` (`client_id`),
+  KEY `IDX_CATEGORY_ID` (`category_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `expenses_categories`
+--
+
+CREATE TABLE IF NOT EXISTS `expenses_categories` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `description` text,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+
 -- --------------------------------------------------------
 
 --
@@ -528,6 +566,13 @@ ALTER TABLE `addressbook`
 --
 ALTER TABLE `clients`
   ADD CONSTRAINT `fk_country` FOREIGN KEY (`country_iso`) REFERENCES `countries` (`iso`);
+
+--
+-- Filtros para la tabla `expenses`
+--
+ALTER TABLE `expenses`
+  ADD CONSTRAINT `expenses_ibfk_1` FOREIGN KEY (`client_id`) REFERENCES `clients` (`id`),
+  ADD CONSTRAINT `expenses_ibfk_2` FOREIGN KEY (`category_id`) REFERENCES `expenses_categories` (`id`);
 
 --
 -- Filtros para la tabla `invoices`
