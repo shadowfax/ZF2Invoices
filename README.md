@@ -12,7 +12,7 @@ Invoicing Application
  * [BjyAuthorize] (https://github.com/bjyoungblood/BjyAuthorize)
  * [DoctrineORMModule](https://github.com/doctrine/DoctrineORMModule)
  
- ## Installation
+## Installation
  
 1. Install the dependencies by running
 ```sh
