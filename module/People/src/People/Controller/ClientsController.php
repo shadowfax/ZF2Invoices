@@ -1,54 +1,42 @@
 <?php
 namespace People\Controller;
 
+use Invoices\Service\ClientService;
+
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
-use Doctrine\ORM\EntityManager;
 use Invoices\Entity\Customer;
-use Invoices\Entity\Country;
 use People\Form\Customer as CustomerForm;
 
 class ClientsController extends AbstractActionController
 {
 	
-	/**   
-     * Entity manager instance
-     *           
-     * @var Doctrine\ORM\EntityManager
-     */                
-    protected $entityManager;
-    
-	/**
-     * Returns an instance of the Doctrine entity manager loaded from the service 
-     * locator
+    /**
      * 
-     * @return Doctrine\ORM\EntityManager
+     * Enter description here ...
+     * @var ClientService
      */
-    public function getEntityManager()
+    protected $clientService;
+    
+    /**
+     * 
+     * @return ClientService
+     */
+    public function getClientService()
     {
-        if (null === $this->entityManager) {
-            $this->entityManager = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
-        }
-        return $this->entityManager;
+    	if (null === $this->clientService) {
+    		$this->clientService = $this->getServiceLocator()->get('invoices.service.client');
+    	}
+    	return $this->clientService;
     }
     
-    protected function getCountriesForCombobox()
-    {
-    	$resultset = array();
-    	
-    	$countries = $this->getEntityManager()->getRepository('Invoices\Entity\Country')->findAll();
-    	foreach($countries as $country) {
-    		$resultset[$country->getIso()] = $country->getEnglishName();
-    	}
-    	return $resultset;
-    }
     
     public function indexAction()
     {
     	// TODO: Use paginator
         return new ViewModel(
         	array(
-        		'customers' => $this->getEntityManager()->getRepository('Invoices\Entity\Customer')->findAll()
+        		'customers' => $this->getClientService()->findAll()
         	)
         );
     }
@@ -64,25 +52,18 @@ class ClientsController extends AbstractActionController
             ));
         }
     	
-        $customer = $this->getEntityManager()->getRepository('Invoices\Entity\Customer')->findOneBy(array('id' => $id));
+        $customer = $this->getClientService()->find($id);
         
     	// TODO: sanity checks
     	
-    	$form = new CustomerForm($this->getEntityManager());
+    	$form = new CustomerForm($this->getClientService()->getEntityManager());
 		$form->bind($customer);
-		
-		//$form->get('customer')->get('countryIso')->setValueOptions($this->getCountriesForCombobox());
 
 		if ($this->request->isPost()) {
 			$form->setData($this->request->getPost());
 
 			if ($form->isValid()) {
-				// Get the country
-				$country = $this->getEntityManager()->getRepository('Invoices\Entity\Country')->findOneBy(array('iso' => $customer->getCountry()));
-				$customer->setCountry( $country );
-				
-				$this->getEntityManager()->persist($customer);
-				$this->getEntityManager()->flush($customer);
+				$this->getClientService()->persist($customer);
 				return $this->redirect()->toRoute('people/default', array('controller' => 'clients'));
 			}
 		}
@@ -95,7 +76,7 @@ class ClientsController extends AbstractActionController
     
     public function addAction()
     {
-    	$form = new CustomerForm($this->getEntityManager());
+    	$form = new CustomerForm($this->getclientService()->getEntityManager());
 		$customer = new Customer();
 		$form->bind($customer);
 
@@ -103,12 +84,7 @@ class ClientsController extends AbstractActionController
 			$form->setData($this->request->getPost());
 
 			if ($form->isValid()) {
-				// Get the country
-				$country = $this->getEntityManager()->getRepository('Invoices\Entity\Country')->findOneBy(array('iso' => $customer->getCountry()));
-				$customer->setCountry( $country );
-				
-				$this->getEntityManager()->persist($customer);
-				$this->getEntityManager()->flush($customer);
+				$this->getClientService()->persist($customer);
 				return $this->redirect()->toRoute('people/default', array('controller' => 'clients'));
 			}
 		}

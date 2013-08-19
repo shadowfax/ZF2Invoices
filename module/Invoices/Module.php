@@ -32,4 +32,13 @@ class Module implements AutoloaderProviderInterface
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
     }
+    
+	public function getServiceConfig()
+	{
+		return array(
+			'factories' => array(
+				'invoices.service.client' => 'Invoices\Factory\ClientServiceFactory',
+			)
+		);
+	}
 }
