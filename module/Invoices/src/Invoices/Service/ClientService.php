@@ -37,7 +37,6 @@ class ClientService extends AbstractDoctrineEntityService
 			}
 		}
 		
-		$this->getEntityManager()->persist($entity);
-		$this->getEntityManager()->flush($entity);
+		parent::persist($entity);
 	}
 }

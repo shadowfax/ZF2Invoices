@@ -180,4 +180,39 @@ abstract class AbstractDoctrineEntityService implements EventManagerAwareInterfa
     	$this->getEventManager()->trigger(__FUNCTION__ . '.post', $this, array('id' => $id, 'entity' => $entity));
     	return $entity;
     }
+    
+	/**
+     * Tells the EntityManager to make an instance managed and persistent.
+     *
+     * The entity will be entered into the database at or before transaction
+     * commit or as a result of the flush operation.
+     *
+     * NOTE: The persist operation always considers entities that are not yet known to
+     * this EntityManager as NEW. Do not pass detached entities to the persist operation.
+     *
+     * @param object $object The instance to make managed and persistent.
+     */
+    public function persist($entity)
+    {
+    	$this->getEventManager()->trigger(__FUNCTION__ . '.pre', $this, array('entity'=>$entity));
+        $this->getEntityManager()->persist($entity);
+        $this->getEntityManager()->flush($entity);
+        $this->getEventManager()->trigger(__FUNCTION__ . '.post', $this, array('entity'=>$entity));
+    }
+    
+	/**
+     * Removes an entity instance.
+     *
+     * A removed entity will be removed from the database at or before transaction commit
+     * or as a result of the flush operation.
+     *
+     * @param object $entity The entity instance to remove.
+     */
+    public function remove($entity)
+    {
+        $this->getEventManager()->trigger(__FUNCTION__ . '.pre', $this, array('entity'=>$entity));
+        $this->getEntityManager()->remove($entity);
+        $this->getEntityManager()->flush($entity);
+        $this->getEventManager()->trigger(__FUNCTION__ . '.post', $this, array('entity'=>$entity));
+    }
 }
