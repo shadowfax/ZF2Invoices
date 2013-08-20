@@ -1,7 +1,10 @@
 <?php
 namespace Invoices\Entity;
 
+use Zend\InputFilter\InputFilterAwareInterface;
+
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * An example of how to implement a role aware user entity.
@@ -45,22 +48,30 @@ class Product
     protected $unit_cost;
     
     /**
-     * @ORM\OneToOne(targetEntity="Invoices\Entity\Tax")
-     * @ORM\JoinColumn(name="tax_id", referencedColumnName="id")
+     * @var \Doctrine\Common\Collections\Collection
+     * @ORM\ManyToMany(targetEntity="Invoices\Entity\Tax")
+     * @ORM\JoinTable(name="products_taxes",
+     *      joinColumns={@ORM\JoinColumn(name="product_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="tax_id", referencedColumnName="id")}
+     * )
      */
-    protected $tax;
+    protected $taxes;
     
-    /**
-     * @ORM\OneToOne(targetEntity="Invoices\Entity\Tax")
-     * @ORM\JoinColumn(name="additional_tax_id", referencedColumnName="id", nullable=true)
-     */
-    protected $additional_tax;
+    
     
     /**
      * @var string
      * @ORM\Column(type="string", length=20, nullable=false)
      */
     protected $item_type = 'product';
+    
+	/**
+     * Initialies the roles variable.
+     */
+    public function __construct()
+    {
+        $this->taxes = new ArrayCollection();
+    }
     
 	/**
      * Get id.
@@ -172,25 +183,6 @@ class Product
         $this->unit_cost = $price;
     }
 
-    public function getTax()
-    {
-    	return $this->tax;
-    }
-    
-    public function setTax($tax)
-    {
-    	$this->tax = $tax;
-    }
-    
-	public function getAdditionalTax()
-    {
-    	return $this->additional_tax;
-    }
-    
-    public function setAdditionalTax($tax)
-    {
-    	$this->additional_tax = $tax;
-    }
     
 	/**
      * Get item type.
@@ -212,6 +204,33 @@ class Product
     public function setItemType($type)
     {
         $this->item_type = strtolower($type);
+    }
+    
+	/**
+     * Get tax.
+     *
+     * @return array
+     */
+    public function getTaxes()
+    {
+        return $this->taxes->getValues();
+    }
+    
+    public function setTaxes($taxes)
+    {
+    	$this->taxes = $taxes;
+    }
+
+    /**
+     * Add a tax to the product.
+     *
+     * @param Tax $role
+     *
+     * @return void
+     */
+    public function addTax($tax)
+    {
+        $this->taxes->add($tax);
     }
     
     /**
@@ -240,5 +259,18 @@ class Product
     	return false;
     }
     
+    /*
+    public function getTax()
+    {
+    	return $this->tax;
+    }
     
+    public function setTax($tax)
+    {
+    	$this->tax = $tax;
+    }
+    */
+    
+    
+	
 }

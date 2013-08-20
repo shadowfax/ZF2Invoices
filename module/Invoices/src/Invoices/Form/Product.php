@@ -2,6 +2,8 @@
 namespace Invoices\Form;
 
 
+use Invoices\Form\Fieldset\TaxesFieldset;
+
 use Zend\InputFilter\InputFilterProviderInterface;
 
 
@@ -102,31 +104,25 @@ class Product extends Form implements ObjectManagerAwareInterface, InputFilterPr
             )
         ));
         
-        // http://samminds.com/2013/03/zendformelementselect-and-database-values/
-        $this->add(array(
-	        'type'    => 'DoctrineModule\Form\Element\ObjectSelect',
-	        'name'    => 'tax',
-	        'options' => array(
-	            'label'          => 'Tax',
-	            'object_manager' => $this->getObjectManager(),
-	            'target_class'   => 'Invoices\Entity\Tax',
-	            'property'       => 'description',
-	            'empty_option'   => '[Choose One]',
-        		'required'       => 'required'
-	        ),
-	    ));
+        $taxesFieldset = new TaxesFieldset($this->getObjectManager());
+        $taxesFieldset->setOptions(array(
+        	'use_as_base_fieldset'  =>  false , 
+        ));
+        //$taxesFieldset->setObject($this->getObject()->getTaxes());
         
         $this->add(array(
-	        'type'    => 'DoctrineModule\Form\Element\ObjectSelect',
-	        'name'    => 'additionalTax',
-	        'options' => array(
-	            'label'          => 'Tax',
-	            'object_manager' => $this->getObjectManager(),
-	            'target_class'   => 'Invoices\Entity\Tax',
-	            'property'       => 'description',
-	            'empty_option'   => '[Choose One]'
-	        ),
-	    ));
+            'type' => 'Zend\Form\Element\Collection',
+            'name' => 'taxes',
+            'options' => array(
+                'label' => 'Please choose taxes for this product',
+                'count' => 1,
+                'should_create_template' => true,
+                'allow_add' => true,
+                'target_element' => $taxesFieldset,
+            )
+        ));
+        
+        // http://samminds.com/2013/03/zendformelementselect-and-database-values/
 		
 
         $this->add(array(
@@ -144,6 +140,7 @@ class Product extends Form implements ObjectManagerAwareInterface, InputFilterPr
         ));
     }
     
+    
 	/**
      * Should return an array specification compatible with
      * {@link Zend\InputFilter\Factory::createInputFilter()}.
@@ -156,35 +153,7 @@ class Product extends Form implements ObjectManagerAwareInterface, InputFilterPr
             'name' => array(
                 'required' => true,
             ),
-            'additionalTax' => array(
-            	'required' => false,
-            )
         );
     }
     
-	/**
-     * Bind an object to the element
-     *
-     * Allows populating the object with validated values.
-     *
-     * @param  object $object
-     * @param  int $flags
-     * @return mixed
-     */
-    public function bind($object, $flags = FormInterface::VALUES_NORMALIZED)
-    {
-    	parent::bind($object, $flags);
-
-    	// Force setting the tax
-    	$tax = $object->getTax();
-    	if (null !== $tax) {
-    		$this->get('tax')->setValue( $tax->getId());
-    	}
-    	
-    	// Force setting the additional tax
-    	$additional_tax = $object->getAdditionalTax();
-    	if (null !== $additional_tax) {
-    		$this->get('additionalTax')->setValue( $additional_tax->getId());
-    	}
-    }
 }

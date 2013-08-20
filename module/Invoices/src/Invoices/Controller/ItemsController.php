@@ -70,19 +70,6 @@ class ItemsController extends AbstractActionController
 					$product->setUnitCost(0.0);
 				}
 				
-				// TAX
-				$tax = $this->getEntityManager()->getRepository('Invoices\Entity\Tax')->findOneBy(array('id' => $product->getTax()));
-				$product->setTax( $tax );
-				
-				// Additional TAX
-				$additional_tax = $product->getAdditionalTax();
-				if (!empty($additional_tax)) {
-					$additional_tax = $this->getEntityManager()->getRepository('Invoices\Entity\Tax')->findOneBy(array('id' => $additional_tax));
-					$product->setAdditionalTax( $additional_tax );
-				} else {
-					$product->setAdditionalTax(null);
-				}
-				
 				$this->getEntityManager()->persist($product);
 				$this->getEntityManager()->flush($product);
 				return $this->redirect()->toRoute('invoices/default', array('controller' => 'items'));
@@ -98,8 +85,8 @@ class ItemsController extends AbstractActionController
     {
     	$id = (int) $this->params()->fromRoute('id', 0);
         if (!$id) {
-            return $this->redirect()->toRoute('people/default', array(
-            	'controller' => 'clients',
+            return $this->redirect()->toRoute('invoices/default', array(
+            	'controller' => 'items',
                 'action'     => 'add'
             ));
         }
@@ -114,23 +101,11 @@ class ItemsController extends AbstractActionController
 		if ($this->request->isPost()) {
 			$form->setData($this->request->getPost());
 
+			//var_dump($product->getTaxes());die();
 			if ($form->isValid()) {
 				$unit_cost = $product->getUnitCost(); 
 				if (empty($unit_cost)) {
 					$product->setUnitCost(0.0);
-				}
-				
-				// TAX
-				$tax = $this->getEntityManager()->getRepository('Invoices\Entity\Tax')->findOneBy(array('id' => $product->getTax()));
-				$product->setTax( $tax );
-				
-			// Additional TAX
-				$additional_tax = $product->getAdditionalTax();
-				if (!empty($additional_tax)) {
-					$additional_tax = $this->getEntityManager()->getRepository('Invoices\Entity\Tax')->findOneBy(array('id' => $additional_tax));
-					$product->setAdditionalTax( $additional_tax );
-				} else {
-					$product->setAdditionalTax(null);
 				}
 				
 				$this->getEntityManager()->persist($product);
