@@ -50,6 +50,9 @@ class TaxesFieldset extends Fieldset implements ObjectManagerAwareInterface, Inp
 	            'empty_option'   => '[Choose One]',
         		'required'       => 'required'
 	        ),
+	        'attributes' => array(
+	        	'class' => 'input-large',
+	        )
 	    ));
     }
 

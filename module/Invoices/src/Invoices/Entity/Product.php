@@ -41,11 +41,6 @@ class Product
      */
     protected $unit_price;
     
-    /**
-     * @var float
-     * @ORM\Column(type="decimal", precision=21, scale=2, nullable=true)
-     */
-    protected $unit_cost;
     
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -159,28 +154,6 @@ class Product
     public function setUnitPrice($price)
     {
         $this->unit_price = $price;
-    }
-    
-	/**
-     * Get unit cost.
-     *
-     * @return float
-     */
-    public function getUnitCost()
-    {
-        return $this->unit_cost;
-    }
-
-    /**
-     * Set unit cost.
-     *
-     * @param string $price
-     *
-     * @return void
-     */
-    public function setUnitCost($price)
-    {
-        $this->unit_cost = $price;
     }
 
     

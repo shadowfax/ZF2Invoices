@@ -60,17 +60,6 @@ $element = $form->get('unitPrice');
                     <span class="help-inline"><?php echo $this->formElementErrors($element) ?></span>
     </div>
 </div>
-<?php 
-$element = $form->get('unitCost');
-?>
-<div class="control-group <?php if($this->formElementErrors($element)) echo " error" ?>">
-    <label class="control-label"><?php echo $element->getLabel() ?></label>
-    <div class="controls">
-        <?php echo $this->formElement($element);
-        if($this->formElementErrors($element)) ?>
-                    <span class="help-inline"><?php echo $this->formElementErrors($element) ?></span>
-    </div>
-</div>
 
 <h3 class="section-header"><?php echo $this->translate("Taxes")?></h3>
 

@@ -51,6 +51,7 @@ class Product extends Form implements ObjectManagerAwareInterface, InputFilterPr
         		)
             ),
             'attributes' => array(
+            	'class'    => 'input-large',
                 'required' => 'required'
             )
         ));
@@ -64,6 +65,9 @@ class Product extends Form implements ObjectManagerAwareInterface, InputFilterPr
         			'class' => 'control-label'
         		)
             ),
+            'attributes' => array(
+            	'class'    => 'input-large',
+            )
 		));
 
         $this->add(array(
@@ -75,6 +79,10 @@ class Product extends Form implements ObjectManagerAwareInterface, InputFilterPr
         			'class' => 'control-label'
         		)
             ),
+            'attributes' => array(
+            	'class' => 'input-xlarge',
+            	'rows'  => '3',
+            )
         ));
         
         $this->add(array(
@@ -91,24 +99,11 @@ class Product extends Form implements ObjectManagerAwareInterface, InputFilterPr
             )
         ));
         
-        $this->add(array(
-            'name' => 'unitCost',
-            'options' => array(
-                'label' => 'Unit Cost',
-        		'label_attributes' => array(
-        			'class' => 'control-label'
-        		)
-            ),
-            'attributes' => array(
-            	'class'    => 'input-mini'
-            )
-        ));
         
         $taxesFieldset = new TaxesFieldset($this->getObjectManager());
         $taxesFieldset->setOptions(array(
         	'use_as_base_fieldset'  =>  false , 
         ));
-        //$taxesFieldset->setObject($this->getObject()->getTaxes());
         
         $this->add(array(
             'type' => 'Zend\Form\Element\Collection',
