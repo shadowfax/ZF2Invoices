@@ -201,5 +201,15 @@ div.span-1, div.span-2, div.span-3, div.span-4, div.span-5, div.span-6, div.span
 	line-height: 16px;
 	margin-top: 5px;
 }
+a.link-new {
+	display: block;
+	float: left;
+	height: 20px;
+	margin-bottom: -2px;
+	line-height: 18px;
+	padding-left: 20px;
+	padding-right: 2px;
+	background: url(../images/icons/new.png) 2px 3px no-repeat;
+}
 
 .clearb {clear:both;height:0px;padding:0;margin:0;}
