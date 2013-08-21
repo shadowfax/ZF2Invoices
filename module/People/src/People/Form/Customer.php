@@ -140,6 +140,20 @@ class Customer extends Form implements ObjectManagerAwareInterface
         ));
         
         $this->add(array(
+            'type' => 'Zend\Form\Element\Collection',
+            'name' => 'contacts',
+            'options' => array(
+                'label' => 'Please choose contacts for this client',
+                'count' => 1,
+                'should_create_template' => true,
+                'allow_add' => true,
+                'target_element' => array(
+                	'type' => '\Invoices\Form\Fieldset\ContactsFieldset',
+        		),
+            )
+        ));
+        
+        $this->add(array(
             'name' => 'notes',
         	'type'    => 'Zend\Form\Element\Textarea',
         	'options' => array(

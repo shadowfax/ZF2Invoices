@@ -35,7 +35,6 @@ $element = $form->get('taxId');
     </div>
 </div>
 
-<h3 class="section-header"><?php echo $this->translate("Details")?></h3>
 <?php 
 $element = $form->get('country');
 ?>
@@ -101,6 +100,143 @@ $element = $form->get('fax');
                     <span class="help-inline"><?php echo $this->formElementErrors($element) ?></span>
     </div>
 </div>
+
+<h3 class="section-header"><?php echo $this->translate("Contacts")?></h3>
+<?php 
+$contacts = $form->get('contacts');
+
+// template
+$elementOrFieldset = $contacts->getTemplateElement();
+
+ob_start();
+?>
+<div class="contact">
+	<div class="span-20">
+		<div class="control-group required">
+			<label class="control-label"><?php echo $elementOrFieldset->get('email')->getLabel(); ?></label>
+			<div class="controls">
+				<?php echo $this->formElement($elementOrFieldset->get('email')); ?>
+			</div>
+		</div>
+	
+		<div class="control-group">
+			<label class="control-label"><?php echo $this->translate("Contact Name")?></label>
+			<div class="controls">
+				<div class="span-5 append-half">
+					<?php echo $this->formElement($elementOrFieldset->get('firstName')); ?>
+					<div class="example"><?php echo $elementOrFieldset->get('firstName')->getLabel(); ?></div>
+				</div>
+				<div class="span-5">
+					<?php echo $this->formElement($elementOrFieldset->get('lastName')); ?>
+					<div class="example"><?php echo $elementOrFieldset->get('lastName')->getLabel(); ?></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="span-18 label-column-small">
+		<div class="control-group">
+			<label class="control-label"><?php echo $elementOrFieldset->get('phone')->getLabel() ?></label>
+			<div class="controls">
+				<?php echo $this->formElement($elementOrFieldset->get('phone')); ?>
+			</div>
+		</div>
+	
+		<div class="control-group">
+			<label class="control-label"><?php echo $elementOrFieldset->get('mobilePhone')->getLabel() ?></label>
+			<div class="controls">
+				<?php echo $this->formElement($elementOrFieldset->get('mobilePhone')); ?>
+			</div>
+		</div>
+	</div>
+	<div class="clearb"></div>
+</div>
+<?php 
+$template = ob_get_contents();
+ob_end_clean();
+
+$template = $this->escapeHtmlAttr($template);
+echo sprintf('<span id="template-add-another-contact" data-template="%s"></span>', $template);
+?>
+
+
+<div id="contacts-container">
+<?php 
+foreach ($contacts->getIterator() as $elementOrFieldset) :
+		//if ($elementOrFieldset instanceof FieldsetInterface) {
+		//	foreach($elementOrFieldset as $element) :
+?>
+<div class="contact">
+	<div class="span-20">
+		<div class="control-group required">
+			<label class="control-label"><?php echo $elementOrFieldset->get('email')->getLabel(); ?></label>
+			<div class="controls">
+				<?php echo $this->formElement($elementOrFieldset->get('email')); ?>
+			</div>
+		</div>
+	
+		<div class="control-group">
+			<label class="control-label"><?php echo $this->translate("Contact Name")?></label>
+			<div class="controls">
+				<div class="span-5 append-half">
+					<?php echo $this->formElement($elementOrFieldset->get('firstName')); ?>
+					<div class="example"><?php echo $elementOrFieldset->get('firstName')->getLabel(); ?></div>
+				</div>
+				<div class="span-5">
+					<?php echo $this->formElement($elementOrFieldset->get('lastName')); ?>
+					<div class="example"><?php echo $elementOrFieldset->get('lastName')->getLabel(); ?></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="span-18 label-column-small">
+		<div class="control-group">
+			<label class="control-label"><?php echo $elementOrFieldset->get('phone')->getLabel() ?></label>
+			<div class="controls">
+				<?php echo $this->formElement($elementOrFieldset->get('phone')); ?>
+			</div>
+		</div>
+	
+		<div class="control-group">
+			<label class="control-label"><?php echo $elementOrFieldset->get('mobilePhone')->getLabel() ?></label>
+			<div class="controls">
+				<?php echo $this->formElement($elementOrFieldset->get('mobilePhone')); ?>
+			</div>
+		</div>
+	</div>
+	<div class="clearb"></div>
+</div>
+<?php 
+		//	endforeach;
+		//}
+	
+endforeach;
+?>
+</div>
+<div class="control-group">
+	<div class="controls">
+		<a href="#" id="add_another_contact" class="link-new"><?php echo $this->translate("Add another contact")?></a>
+	</div>
+</div>
+<script type="text/javascript">
+<!--
+	$('#add_another_contact').click(function(event) {
+		event.preventDefault();
+
+		currentCount = $('#contacts-container div.contact').length;
+		//element = $('#template-add-another-tax').clone().html();
+		element = $('#template-add-another-contact').data('template');
+		element = element.replace(/__index__/g, currentCount);
+		element = $.parseHTML(element);
+		
+		$('#contacts-container').append(element);
+		return false;
+	});
+//-->
+</script>
+
+
+<h3 class="section-header"><?php echo $this->translate("Internal Information")?></h3>
 <?php
 $element = $form->get('notes');
 ?>

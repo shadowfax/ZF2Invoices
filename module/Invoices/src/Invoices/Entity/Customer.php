@@ -91,6 +91,24 @@ class Customer
     protected $notes;
     
     /**
+     * @var \Doctrine\Common\Collections\Collection
+     * @ORM\ManyToMany(targetEntity="Invoices\Entity\Contact",cascade={"persist"})
+     * @ORM\JoinTable(name="client_contact_linker",
+     *      joinColumns={@ORM\JoinColumn(name="client_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="contact_id", referencedColumnName="id")}
+     * )
+     */
+    protected $contacts;
+    
+	/**
+     * Initialies the contacts variable.
+     */
+    public function __construct()
+    {
+        $this->contacts = new ArrayCollection();
+    }
+    
+    /**
      * Get id.
      *
      * @return int
@@ -352,5 +370,32 @@ class Customer
     public function setNotes($notes)
     {
         $this->notes = $notes;
+    }
+    
+	/**
+     * Get contacts.
+     *
+     * @return array
+     */
+    public function getContacts()
+    {
+        return $this->contacts->getValues();
+    }
+    
+    public function setContacts($contacts)
+    {
+    	$this->contacts = $contacts;
+    }
+
+    /**
+     * Add a contact to the customer.
+     *
+     * @param Invoices\Entity\Contact $contact
+     *
+     * @return void
+     */
+    public function addContact($contact)
+    {
+        $this->contacts->add($contact);
     }
 }

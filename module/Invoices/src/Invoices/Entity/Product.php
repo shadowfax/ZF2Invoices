@@ -61,7 +61,7 @@ class Product
     protected $item_type = 'product';
     
 	/**
-     * Initialies the roles variable.
+     * Initialies the taxes variable.
      */
     public function __construct()
     {
@@ -197,7 +197,7 @@ class Product
     /**
      * Add a tax to the product.
      *
-     * @param Tax $role
+     * @param Tax $tax
      *
      * @return void
      */
@@ -231,19 +231,5 @@ class Product
     	}
     	return false;
     }
-    
-    /*
-    public function getTax()
-    {
-    	return $this->tax;
-    }
-    
-    public function setTax($tax)
-    {
-    	$this->tax = $tax;
-    }
-    */
-    
-    
 	
 }
