@@ -41,4 +41,13 @@ class Module implements AutoloaderProviderInterface
 			)
 		);
 	}
+	
+	public function getViewHelperConfig() 
+	{
+	    return array(
+	        'invokables' => array(
+	            'formHorizontalRow' => 'Invoices\Form\View\Helper\FormHorizontalRow'
+	        )
+	    );
+	}
 }

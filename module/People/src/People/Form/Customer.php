@@ -43,10 +43,14 @@ class Customer extends Form implements ObjectManagerAwareInterface
         $this->add(array(
             'name' => 'name',
             'options' => array(
-                'label' => 'Organization Name'
+                'label' => 'Organization Name',
+        		'label_attributes' => array(
+					'class'  => 'control-label'
+				),
             ),
             'attributes' => array(
-            	'class' => 'input-xxlarge',
+            	'class'    => 'input-xxlarge',
+            	'id'       => 'organization',
                 'required' => 'required'
             )
         ));
@@ -54,7 +58,10 @@ class Customer extends Form implements ObjectManagerAwareInterface
         $this->add(array(
             'name' => 'taxId',
             'options' => array(
-                'label' => 'Tax ID'
+                'label' => 'Tax ID',
+        		'label_attributes' => array(
+					'class'  => 'control-label'
+				),
             ),
             'attributes' => array(
             	'class'    => 'formTextMed'
@@ -67,6 +74,9 @@ class Customer extends Form implements ObjectManagerAwareInterface
 	        'name'    => 'country',
 	        'options' => array(
 	            'label'          => 'Country',
+        		'label_attributes' => array(
+					'class'  => 'control-label'
+				),
 	            'object_manager' => $this->getObjectManager(),
 	            'target_class'   => 'Invoices\Entity\Country',
 	            'property'       => 'english_name',
@@ -122,7 +132,10 @@ class Customer extends Form implements ObjectManagerAwareInterface
         $this->add(array(
             'name' => 'phone',
         	'options' => array(
-                'label' => 'Business Phone'
+                'label' => 'Business Phone',
+        		'label_attributes' => array(
+					'class'  => 'control-label'
+				),
             ),
             'attributes' => array(
         		'class'    => 'input-medium',
@@ -132,7 +145,10 @@ class Customer extends Form implements ObjectManagerAwareInterface
         $this->add(array(
             'name' => 'fax',
         	'options' => array(
-                'label' => 'Fax'
+                'label' => 'Fax',
+        		'label_attributes' => array(
+					'class'  => 'control-label'
+				),
             ),
             'attributes' => array(
         		'class'    => 'input-medium',
@@ -157,7 +173,10 @@ class Customer extends Form implements ObjectManagerAwareInterface
             'name' => 'notes',
         	'type'    => 'Zend\Form\Element\Textarea',
         	'options' => array(
-                'label' => 'Internal Notes'
+                'label' => 'Internal Notes',
+        		'label_attributes' => array(
+					'class'  => 'control-label'
+				),
             ),
             'attributes' => array(
         		'class'    => 'input-xlarge',

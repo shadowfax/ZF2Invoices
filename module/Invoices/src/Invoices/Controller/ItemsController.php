@@ -4,9 +4,14 @@ namespace Invoices\Controller;
 use Invoices\Entity\Product as ProductEntity;
 use Invoices\Form\Product as ProductForm;
 
-
+// Paginator
+use Zend\Paginator\Paginator;
+use Doctrine\ORM\Tools\Pagination\Paginator as ORMPaginator;
+use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator;
+// View
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+
 
 class ItemsController extends AbstractActionController
 {
@@ -45,6 +50,27 @@ class ItemsController extends AbstractActionController
     
     public function indexAction()
     {
+    	// Pagination
+    	$view = new ViewModel();
+    	
+    	$entityManager = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
+		$repository = $entityManager->getRepository('Invoices\Entity\Product');
+		$adapter = new DoctrinePaginator(new ORMPaginator($repository->createQueryBuilder('product')));
+		$paginator = new Paginator($adapter);
+		
+		// Dynamic results per page
+		$results = (int)$this->params()->fromQuery('results');
+		if ($results < 10) $results = 20;
+		$paginator->setDefaultItemCountPerPage($results);
+		
+		$page = (int)$this->params()->fromQuery('page');
+		if($page) $paginator->setCurrentPageNumber($page);
+		
+		$view->setVariable('paginator',$paginator);
+		
+		return new ViewModel(array(
+			'paginator' => $paginator,
+		));
         // TODO: Use paginator
         return new ViewModel(
         	array(

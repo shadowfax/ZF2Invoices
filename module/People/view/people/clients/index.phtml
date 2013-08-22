@@ -7,14 +7,33 @@
 <table class="table">
 <tr>
     <th><?php echo $this->translate("Organization")?></th>
+    <th><?php echo $this->translate("Contacts")?></th>
     <th>&nbsp;</th>
 </tr>
 <?php 
-	foreach ($customers as $client) : 
+	foreach ($this->paginator as $client) :
+	//foreach ($customers as $client) : 
 ?>
 <tr>
     <td>
     	<?php echo $this->escapeHtml($client->getName()); ?>
+    </td>
+    <td>
+    	<?php 
+    		$contacts = $client->getContacts();
+    		foreach ($contacts as $contact) {
+    			$email = $contact->getEmail();
+    			echo "<div>";
+    			if (!empty($email)) {
+    				echo '<a href="mailto:' . $email . '">';
+    			}
+    			echo $this->escapeHtml($contact->getLastName() . ', ' . $contact->getFirstName());
+    			if (!empty($email)) {
+    				echo '</a>';
+    			}    		
+    			echo "</div>";	
+    		}
+    	?>
     </td>
     <td>
     	<a href="<?php echo $this->url('people/default', array('controller' => 'clients', 'action' => 'edit', 'id' => $client->getId()));?>"><?php echo $this->translate("Edit")?></a>
@@ -24,3 +43,17 @@
 	endforeach; 
 ?>
 </table>
+
+<?php // add at the end of the file after the table
+echo $this->paginationControl(
+    // the paginator object
+    $this->paginator,
+    // the scrolling style; see http://zf2.readthedocs.org/en/release-2.1.4/modules/zend.paginator.usage.html#rendering-pages-with-view-scripts
+    'sliding',
+    // the partial to use to render the control
+    array('partial/paginator.phtml', 'Client'),
+    // the route to link to when a user clicks a control link
+    array(
+        'route' => 'people/default'
+    )
+);

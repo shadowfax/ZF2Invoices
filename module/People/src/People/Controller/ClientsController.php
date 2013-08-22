@@ -1,12 +1,19 @@
 <?php
 namespace People\Controller;
 
+
 use Invoices\Service\ClientService;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Invoices\Entity\Customer;
 use People\Form\Customer as CustomerForm;
+// Paginator
+use Zend\Paginator\Paginator;
+use Doctrine\ORM\Tools\Pagination\Paginator as ORMPaginator;
+use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator;
+
+
 
 class ClientsController extends AbstractActionController
 {
@@ -33,12 +40,33 @@ class ClientsController extends AbstractActionController
     
     public function indexAction()
     {
+    	// Pagination
+    	$view = new ViewModel();
+    	
+    	$entityManager = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
+		$repository = $entityManager->getRepository('Invoices\Entity\Customer');
+		$adapter = new DoctrinePaginator(new ORMPaginator($repository->createQueryBuilder('customer')));
+		$paginator = new Paginator($adapter);
+		
+		// Dynamic results per page
+		$results = (int)$this->params()->fromQuery('results');
+		if ($results < 10) $results = 20;
+		$paginator->setDefaultItemCountPerPage($results);
+		
+		$page = (int)$this->params()->fromQuery('page');
+		if($page) $paginator->setCurrentPageNumber($page);
+		
+		$view->setVariable('paginator',$paginator);
+		
+		return new ViewModel(array(
+			'paginator' => $paginator,
+		));
     	// TODO: Use paginator
-        return new ViewModel(
-        	array(
-        		'customers' => $this->getClientService()->findAll()
-        	)
-        );
+        //return new ViewModel(
+        //	array(
+        //		'customers' => $this->getClientService()->findAll()
+        //	)
+        //);
     }
     
     // https://github.com/shanethehat/zf2-doctrine-tutorial/blob/master/module/Album/src/Album/Controller/AlbumController.php

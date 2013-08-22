@@ -12,40 +12,10 @@ $form->setAttribute('action', $this->url('people/default', $url_params))
 
 echo $this->form()->openTag($form);
 
-// NAME
-$element = $form->get('name');
+echo $this->formHorizontalRow($form->get('name'));
+echo $this->formHorizontalRow($form->get('taxId'));
+echo $this->formHorizontalRow($form->get('country'));
 ?>
-<div class="control-group section-start<?php if($this->formElementErrors($element)) echo " error" ?>">
-    <label class="control-label"><?php echo $element->getLabel() ?></label>
-    <div class="controls">
-        <?php echo $this->formElement($element);
-        if($this->formElementErrors($element)) ?>
-                    <span class="help-inline"><?php echo $this->formElementErrors($element) ?></span>
-    </div>
-</div>
-<?php 
-$element = $form->get('taxId');
-?>
-<div class="control-group <?php if($this->formElementErrors($element)) echo " error" ?>">
-    <label class="control-label"><?php echo $element->getLabel() ?></label>
-    <div class="controls">
-        <?php echo $this->formElement($element);
-        if($this->formElementErrors($element)) ?>
-                    <span class="help-inline"><?php echo $this->formElementErrors($element) ?></span>
-    </div>
-</div>
-
-<?php 
-$element = $form->get('country');
-?>
-<div class="control-group <?php if($this->formElementErrors($element)) echo " error" ?>">
-    <label class="control-label"><?php echo $element->getLabel() ?></label>
-    <div class="controls">
-        <?php echo $this->formElement($element);
-        if($this->formElementErrors($element)) ?>
-                    <span class="help-inline"><?php echo $this->formElementErrors($element) ?></span>
-    </div>
-</div>
 
 <div class="control-group">
 		<label class="control-label"><?php echo $form->get('street')->getLabel() ?></label>
@@ -77,29 +47,9 @@ $element = $form->get('country');
 		</div>
 	</div>
 <?php
-// phone
-$element = $form->get('phone');
+echo $this->formHorizontalRow($form->get('phone'));
+echo $this->formHorizontalRow($form->get('fax'));
 ?>
-<div class="control-group<?php if($this->formElementErrors($element)) echo " error" ?>">
-    <label class="control-label"><?php echo $element->getLabel() ?></label>
-    <div class="controls">
-        <?php echo $this->formElement($element);
-        if($this->formElementErrors($element)) ?>
-                    <span class="help-inline"><?php echo $this->formElementErrors($element) ?></span>
-    </div>
-</div>
-<?php
-// FAX
-$element = $form->get('fax');
-?>
-<div class="control-group<?php if($this->formElementErrors($element)) echo " error" ?>">
-    <label class="control-label"><?php echo $element->getLabel() ?></label>
-    <div class="controls">
-        <?php echo $this->formElement($element);
-        if($this->formElementErrors($element)) ?>
-                    <span class="help-inline"><?php echo $this->formElementErrors($element) ?></span>
-    </div>
-</div>
 
 <h3 class="section-header"><?php echo $this->translate("Contacts")?></h3>
 <?php 
@@ -238,16 +188,9 @@ endforeach;
 
 <h3 class="section-header"><?php echo $this->translate("Internal Information")?></h3>
 <?php
-$element = $form->get('notes');
+echo $this->formHorizontalRow($form->get('notes'));
 ?>
-<div class="control-group<?php if($this->formElementErrors($element)) echo " error" ?>">
-    <label class="control-label"><?php echo $element->getLabel() ?></label>
-    <div class="controls">
-        <?php echo $this->formElement($element);
-        if($this->formElementErrors($element)) ?>
-                    <span class="help-inline"><?php echo $this->formElementErrors($element) ?></span>
-    </div>
-</div>
+
 <?php
 // CSRF 
 echo $this->formHidden($form->get('csrf'));
