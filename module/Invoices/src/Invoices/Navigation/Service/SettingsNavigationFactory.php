@@ -1,5 +1,5 @@
 <?php
-namespace Settings\Navigation\Service;
+namespace Invoices\Navigation\Service;
 
 use Zend\Navigation\Service\DefaultNavigationFactory;
 

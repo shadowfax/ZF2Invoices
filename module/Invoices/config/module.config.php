@@ -6,6 +6,7 @@ return array(
         'invokables' => array(
             'Invoices\Controller\Invoice' => 'Invoices\Controller\InvoiceController',
 			'Invoices\Controller\Items' => 'Invoices\Controller\ItemsController',
+			'Invoices\Controller\Settings' => 'Invoices\Controller\SettingsController',
         ),
     ),
     'router' => array(
@@ -44,6 +45,39 @@ return array(
                     ),
                 ),
             ),
+            'settings' => array(
+                'type'    => 'Literal',
+                'options' => array(
+                    // Change this to something specific to your module
+                    'route'    => '/settings',
+                    'defaults' => array(
+                        // Change this value to reflect the namespace in which
+                        // the controllers for your module are found
+                        '__NAMESPACE__' => 'Invoices\Controller',
+                        'controller'    => 'settings',
+                        'action'        => 'company',
+                    ),
+                ),
+                'may_terminate' => true,
+                'child_routes' => array(
+                    // This route is a sane default when developing a module;
+                    // as you solidify the routes for your module, however,
+                    // you may want to remove it and replace it with more
+                    // specific routes.
+                    'default' => array(
+                        'type'    => 'Segment',
+                        'options' => array(
+                            'route'    => '/[:action]',
+                            'constraints' => array(
+                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                            ),
+                            'defaults' => array(
+                            	'action' => 'company'
+                            ),
+                        ),
+                    ),
+                ),
+			),
         ),
     ),
     'view_manager' => array(
@@ -51,6 +85,11 @@ return array(
             'InvoicesModule' => __DIR__ . '/../view',
         ),
     ),
+    'service_manager' => array(
+		'factories' => array(
+			'settings_navigation' => 'Invoices\Navigation\Service\SettingsNavigationFactory'
+		),
+	),
     // Navigation
     'navigation' => array(
         'default' => array(
@@ -93,6 +132,17 @@ return array(
     			),
              ),
          ),
+         'settings-nav' => array(
+    		'company' => array(
+				'label' => 'Company',
+				'route' => 'settings'
+			),
+			'taxes' => array(
+				'label' => 'Taxes',
+				'route' => 'settings/default',
+				'action' => 'taxes'
+			),
+    	)
      ),
      // Doctrine config
     'doctrine' => array(

@@ -1,13 +1,13 @@
 <?php
-namespace Settings\Controller;
+namespace Invoices\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+
 use Doctrine\ORM\EntityManager;
-use Invoices\Entity\Tax;
+use Invoices\Entity\Tax as TaxEntity;
 
-
-class TaxesController extends AbstractActionController
+class SettingsController extends AbstractActionController
 {
 	/**   
      * Entity manager instance
@@ -30,9 +30,14 @@ class TaxesController extends AbstractActionController
         return $this->entityManager;
     }
     
-    public function indexAction()
+    public function companyAction()
     {
-    	// Is tax equalization active?
+        return new ViewModel();
+    }
+    
+	public function taxesAction()
+    {
+        // Is tax equalization active?
     	// Tax equalization in spanish is "Recargo de equivalencia" and is needed
     	// for some invoices
     	$tax_equalization = $this->getEntityManager()->getRepository('Application\Entity\Option')->findOneBy(array('key' => 'tax_equalization'));
@@ -47,5 +52,4 @@ class TaxesController extends AbstractActionController
             )
         );
     }
-    
 }
