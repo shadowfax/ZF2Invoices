@@ -30,7 +30,7 @@ class Tax implements InputFilterAwareInterface
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    protected $id = 0;
     
     /**
      * @var string
@@ -161,6 +161,30 @@ class Tax implements InputFilterAwareInterface
     	}
     	
     	return $this->inputFilter;
+    }
+    
+	/**
+     * Convert the object to an array.
+     *
+     * @return array
+     */
+    public function getArrayCopy() 
+    {
+        return get_object_vars($this);
+    }
+
+    /**
+     * Populate from an array.
+     *
+     * @param array $data
+     */
+    public function populate($data = array()) 
+    {
+        $this->id           = $data['id'];
+        $this->description  = $data['description'];
+        $this->percentage   = $data['percentage'];
+        $this->equalization = $data['equalization'];
+        $this->active       = $data['active'];
     }
     
 	/**

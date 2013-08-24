@@ -7,38 +7,42 @@
 	<?php echo $this->translate("Need to charge your clients tax? Customize your taxes here and reuse them on your future invoices and expenses."); ?>
 </div>
 
+<?php 
+$form->setAttribute('action', $this->url('settings/default', array('action' => 'taxes')))
+     ->prepare();
+
+echo $this->form()->openTag($form);
+?>
 <table class="table">
 <tr>
     <th><?php echo $this->translate("Description")?></th>
     <th><?php echo $this->translate("Rate")?></th>
-    <?php if ($tax_equalization) : ?>
     <th><?php echo $this->translate("Equalization")?></th>
-    <?php endif; ?>
     <th><?php echo $this->translate("Active")?></th>
 </tr>
-<?php 
-	$array_index = 0;
-	foreach ($taxes as $tax) : 
+<?php
+$taxes = $form->get('taxes'); 
+foreach ($taxes->getIterator() as $elementOrFieldset) : 
 ?>
 <tr>
     <td>
-    	<input name="taxes[<?php echo $array_index; ?>][id]" type="hidden" value="<?php echo $this->escapeHtml($tax->getId());?>" />
-    	<input class="formTextMed" maxlength="15" name="taxes[<?php echo $array_index; ?>][description]" type="text" value="<?php echo $this->escapeHtml($tax->getDescription());?>" style="width: 200px">
+    	<?php echo $this->formElement($elementOrFieldset->get("id")); ?>
+    	<?php echo $this->formElement($elementOrFieldset->get("description")); ?>
     </td>
-    <td>
-    	<input class="formTextMini" onkeypress="return numbersonly(this,event)" maxlength="7" name="taxes[<?php echo $array_index; ?>][percentage]" type="text" value="<?php echo $this->escapeHtml($tax->getPercentage());?>" style="width:50px;"> %
-    </td>
-    <?php if ($tax_equalization) : ?>
-    <td>
-    	<input class="formTextMini" onkeypress="return numbersonly(this,event)" maxlength="7" name="taxes[<?php echo $array_index; ?>][equalization]" type="text" value="<?php echo $this->escapeHtml($tax->getEqualization());?>" style="width:50px;"> %
-    </td>
-    <?php endif; ?>
-    <td>
-    	<input type="checkbox" name="taxes[<?php echo $array_index; ?>][active]" <?php echo ($tax->getActive()) ? 'checked="checked"' : ''; ?>" />
-    </td>
+    <td><?php echo $this->formElement($elementOrFieldset->get("percentage")); ?> %</td>
+    <td><?php echo $this->formElement($elementOrFieldset->get("equalization")); ?> %</td>
+    <td><?php echo $this->formElement($elementOrFieldset->get("active")); ?></td>
 </tr>
-<?php
-		$array_index++; 
-	endforeach; 
-?>
+<?php endforeach; ?>
 </table>
+<?php
+// CSRF 
+echo $this->formHidden($form->get('csrf'));
+?>
+<div class="submit-container">
+	<span class="button large inline green">
+		<?php echo $this->formElement($form->get('submit')); ?>
+	</span>
+</div>
+<?php 
+echo $this->form()->closeTag(); ?>

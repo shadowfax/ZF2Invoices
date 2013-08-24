@@ -35,7 +35,7 @@ class TaxesFieldset extends Fieldset implements ObjectManagerAwareInterface, Inp
     	
 		parent::__construct('tax');
         $this->setHydrator(new ClassMethodsHydrator(false))
-            ->setObject(new TaxEntity());
+             ->setObject(new TaxEntity());
         
         // http://samminds.com/2013/03/zendformelementselect-and-database-values/
         $this->add(array(
