@@ -157,6 +157,14 @@ div.container a.brand {
 	padding-left: 180px;
 }
 
+.form-horizontal .required .control-label, .form-horizontal table .required {
+	background: url(../images/application.png) no-repeat scroll right -90px transparent!important;
+}
+
+.formTextMini {
+	width: 50px;
+}
+
 .formTextMed {
 	width: 150px;
 }
