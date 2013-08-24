@@ -91,11 +91,6 @@ class ItemsController extends AbstractActionController
 			$form->setData($this->request->getPost());
 
 			if ($form->isValid()) {
-				$unit_cost = $product->getUnitCost(); 
-				if (empty($unit_cost)) {
-					$product->setUnitCost(0.0);
-				}
-				
 				$this->getEntityManager()->persist($product);
 				$this->getEntityManager()->flush($product);
 				return $this->redirect()->toRoute('invoices/default', array('controller' => 'items'));
@@ -129,11 +124,6 @@ class ItemsController extends AbstractActionController
 
 			//var_dump($product->getTaxes());die();
 			if ($form->isValid()) {
-				$unit_cost = $product->getUnitCost(); 
-				if (empty($unit_cost)) {
-					$product->setUnitCost(0.0);
-				}
-				
 				$this->getEntityManager()->persist($product);
 				$this->getEntityManager()->flush($product);
 				return $this->redirect()->toRoute('invoices/default', array('controller' => 'items'));
