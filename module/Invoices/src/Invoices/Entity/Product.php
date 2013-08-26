@@ -186,7 +186,8 @@ class Product
      */
     public function getTaxes()
     {
-        return $this->taxes->getValues();
+        //return $this->taxes->getValues();
+        return $this->taxes;
     }
     
     public function setTaxes($taxes)

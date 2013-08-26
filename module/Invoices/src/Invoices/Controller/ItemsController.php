@@ -22,6 +22,8 @@ class ItemsController extends AbstractActionController
      */                
     protected $entityManager;
     
+    protected $itemsService;
+    
 	/**
      * Returns an instance of the Doctrine entity manager loaded from the service 
      * locator
@@ -34,6 +36,14 @@ class ItemsController extends AbstractActionController
             $this->entityManager = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
         }
         return $this->entityManager;
+    }
+    
+    public function getItemsService()
+    {
+    	if (null === $this->itemsService) {
+            $this->itemsService = $this->getServiceLocator()->get('invoices.service.items');
+        }
+        return $this->itemsService;
     }
     
     public function getItemTypesForCombobox()
@@ -91,8 +101,7 @@ class ItemsController extends AbstractActionController
 			$form->setData($this->request->getPost());
 
 			if ($form->isValid()) {
-				$this->getEntityManager()->persist($product);
-				$this->getEntityManager()->flush($product);
+				$this->getItemsService()->persist($product);
 				return $this->redirect()->toRoute('invoices/default', array('controller' => 'items'));
 			}
 		}
@@ -124,8 +133,7 @@ class ItemsController extends AbstractActionController
 
 			//var_dump($product->getTaxes());die();
 			if ($form->isValid()) {
-				$this->getEntityManager()->persist($product);
-				$this->getEntityManager()->flush($product);
+				$this->getItemsService()->persist($product);
 				return $this->redirect()->toRoute('invoices/default', array('controller' => 'items'));
 			}
 		}

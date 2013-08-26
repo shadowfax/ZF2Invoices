@@ -38,6 +38,7 @@ class Module implements AutoloaderProviderInterface
 		return array(
 			'factories' => array(
 				'invoices.service.client' => 'Invoices\Factory\ClientServiceFactory',
+				'invoices.service.items'  => 'Invoices\Factory\InvoiceItemsServiceFactory',
 			)
 		);
 	}

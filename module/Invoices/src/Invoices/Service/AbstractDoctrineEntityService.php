@@ -58,7 +58,7 @@ abstract class AbstractDoctrineEntityService implements EventManagerAwareInterfa
      *
      * Lazy loads an instance if none registered.
      *
-     * @return EventManagerInterface
+     * @return Zend\EventManager\EventManager
      */
     public function getEventManager()
     {
