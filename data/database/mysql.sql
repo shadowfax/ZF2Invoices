@@ -13,6 +13,29 @@ SET time_zone = "+00:00";
 CREATE DATABASE IF NOT EXISTS `zf2invoices` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE `zf2invoices`;
 
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `addressbook`
+--
+
+CREATE TABLE IF NOT EXISTS `addressbook` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `customer_id` bigint(20) unsigned DEFAULT NULL,
+  `name` varchar(255) NOT NULL,
+  `url` varchar(255) NOT NULL,
+  `contact_type` varchar(30) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `fax` varchar(15) NOT NULL,
+  `telephone` varchar(15) NOT NULL,
+  `country` varchar(3) NOT NULL,
+  `locality` varchar(100) NOT NULL,
+  `region` varchar(100) NOT NULL,
+  `postalcode` varchar(30) NOT NULL,
+  `street` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_CUSTOMER` (`customer_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -36,7 +59,6 @@ CREATE TABLE IF NOT EXISTS `clients` (
   PRIMARY KEY (`id`),
   KEY `IDX_COUNTRY` (`country_iso`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
 
 -- --------------------------------------------------------
 
@@ -333,6 +355,79 @@ INSERT INTO `countries` (`iso`, `english_name`, `iso3`, `numcode`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `expenses`
+--
+
+CREATE TABLE IF NOT EXISTS `expenses` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `date` date NOT NULL,
+  `category_id` bigint(20) unsigned NOT NULL,
+  `total_amount` decimal(21,2) NOT NULL,
+  `tax_percentage` decimal(4,1) NOT NULL,
+  `client_id` bigint(20) unsigned DEFAULT NULL,
+  `user_id` bigint(20) unsigned DEFAULT NULL COMMENT 'Allows a user to view or edit his expenses',
+  `creator_name` varchar(255) NOT NULL COMMENT 'In case the user gets deleted we must see this info',
+  `image` text,
+  `notes` text,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `IDX_CLIENT_ID` (`client_id`),
+  KEY `IDX_CATEGORY_ID` (`category_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `expenses_categories`
+--
+
+CREATE TABLE IF NOT EXISTS `expenses_categories` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `description` text,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `invoices`
+--
+
+CREATE TABLE IF NOT EXISTS `invoices` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `serie` char(1) DEFAULT NULL,
+  `number` bigint(20) unsigned NOT NULL,
+  `date` date NOT NULL,
+  `client_id` bigint(20) unsigned DEFAULT NULL COMMENT 'Relation to client if client exists',
+  `gross_amount` decimal(65,4) NOT NULL,
+  `discount` decimal(6,2) NOT NULL,
+  `taxable_amount` decimal(65,4) NOT NULL COMMENT 'Base imponible',
+  `shipping_cost` decimal(16,3) NOT NULL,
+  `tax_percentage` decimal(6,2) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_CLIENT_ID` (`client_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `invoices_header`
+--
+
+CREATE TABLE IF NOT EXISTS `invoices_header` (
+  `invoice_id` bigint(20) unsigned NOT NULL,
+  `client_name` varchar(255) NOT NULL,
+  `client_tax_id` varchar(15) NOT NULL,
+  `client_street` varchar(255) NOT NULL,
+  `client_street2` varchar(255) NOT NULL,
+  `client_locality` varchar(255) NOT NULL,
+  `client_region` varchar(255) NOT NULL,
+  `client_country` varchar(80) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Stores the invoice header information.';
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `options`
 --
 
@@ -376,7 +471,8 @@ CREATE TABLE IF NOT EXISTS `products_taxes` (
   `product_id` bigint(20) unsigned NOT NULL,
   `tax_id` int(10) unsigned NOT NULL,
   PRIMARY KEY (`product_id`,`tax_id`),
-  KEY `tax_id` (`tax_id`)
+  KEY `tax_id` (`tax_id`),
+  KEY `IX_PRODUCT_ID` (`product_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -493,6 +589,11 @@ INSERT INTO `user_role_linker` (`user_id`, `role_id`) VALUES
 -- Restricciones para tablas volcadas
 --
 
+--
+-- Filtros para la tabla `addressbook`
+--
+ALTER TABLE `addressbook`
+  ADD CONSTRAINT `fk_customer_id` FOREIGN KEY (`customer_id`) REFERENCES `clients` (`id`);
 
 --
 -- Filtros para la tabla `clients`
@@ -504,9 +605,21 @@ ALTER TABLE `clients`
 -- Filtros para la tabla `client_contact_linker`
 --
 ALTER TABLE `client_contact_linker`
-  ADD CONSTRAINT `client_contact_linker_ibfk_2` FOREIGN KEY (`contact_id`) REFERENCES `contacts` (`id`),
-  ADD CONSTRAINT `client_contact_linker_ibfk_1` FOREIGN KEY (`client_id`) REFERENCES `clients` (`id`);
+  ADD CONSTRAINT `client_contact_linker_ibfk_1` FOREIGN KEY (`client_id`) REFERENCES `clients` (`id`),
+  ADD CONSTRAINT `client_contact_linker_ibfk_2` FOREIGN KEY (`contact_id`) REFERENCES `contacts` (`id`);
 
+--
+-- Filtros para la tabla `expenses`
+--
+ALTER TABLE `expenses`
+  ADD CONSTRAINT `expenses_ibfk_1` FOREIGN KEY (`client_id`) REFERENCES `clients` (`id`),
+  ADD CONSTRAINT `expenses_ibfk_2` FOREIGN KEY (`category_id`) REFERENCES `expenses_categories` (`id`);
+
+--
+-- Filtros para la tabla `invoices`
+--
+ALTER TABLE `invoices`
+  ADD CONSTRAINT `fk_client_id` FOREIGN KEY (`client_id`) REFERENCES `clients` (`id`);
 
 --
 -- Filtros para la tabla `products_taxes`
