@@ -48,7 +48,13 @@ class TaxesFieldset extends Fieldset implements ObjectManagerAwareInterface, Inp
 	            'target_class'   => 'Invoices\Entity\Tax',
 	            'property'       => 'description',
 	            'empty_option'   => '[Choose One]',
-        		'required'       => 'required'
+        		'required'       => 'required',
+        		'find_method'    => array(
+	                'name'   => 'findBy',
+	                'params' => array(
+	                    'criteria' => array('active' => 1),
+	                ),
+	            ),
 	        ),
 	        'attributes' => array(
 	        	'class' => 'input-large',
