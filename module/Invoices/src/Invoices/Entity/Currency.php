@@ -173,8 +173,8 @@ class Currency implements InputFilterAwareInterface
      */
     public function populate($data = array()) 
     {
-        $this->iso           = $data['iso'];
-        $this->currency  = $data['currency'];
+        $this->iso      = $data['iso'];
+        $this->currency = $data['currency'];
         $this->symbol   = $data['symbol'];
     }
     
@@ -183,5 +183,29 @@ class Currency implements InputFilterAwareInterface
     {
     	return $this->currency;
     }
-	  
+    
+    public function setCurrency($currency)
+    {
+    	$this->currency = $currency;
+    }
+	 
+    public function getIso()
+    {
+    	return $this->iso;
+    }
+    
+    public function setIso($iso)
+    {
+    	$this->iso = $iso;
+    }
+    
+    public function getSymbol()
+    {
+    	return $this->symbol;
+    }
+    
+    public function setSymbol($symbol)
+    {
+    	$this->symbol = $symbol;
+    }
 }

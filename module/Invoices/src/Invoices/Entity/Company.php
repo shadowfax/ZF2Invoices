@@ -22,7 +22,7 @@ class Company implements InputFilterAwareInterface
 	 * Input filter instance.
 	 * @var Zend\InputFilter\InputFilterInterface
 	 */
-	protected $inputFilter;
+	private $inputFilter;
 	
 	/**
      * @var int

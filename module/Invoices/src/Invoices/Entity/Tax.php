@@ -142,9 +142,10 @@ class Tax implements InputFilterAwareInterface
     		)));
     		
     		$inputFilter->add($factory->createInput(array(
-    			'name'     => 'equalization',
-    			'required' => 'false',
-    			'filters'  => array(
+    			'name'        => 'equalization',
+    			'required'    => 'false',
+    			'allow_empty' => 'true',
+    			'filters'     => array(
     				array('name' => 'Digits')
     			)
     		)));

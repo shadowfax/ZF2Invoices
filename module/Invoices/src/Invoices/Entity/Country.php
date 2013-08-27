@@ -1,13 +1,18 @@
 <?php
 namespace Invoices\Entity;
 
+
 use Doctrine\ORM\Mapping as ORM;
+use Zend\InputFilter\InputFilterAwareInterface;
+use Zend\InputFilter\InputFilterInterface;
+use Zend\InputFilter\Factory as InputFilterFactory;
+use Zend\InputFilter\InputFilter;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="countries")
  */
-class Country
+class Country implements InputFilterAwareInterface
 {
 	/**
      * @var string
@@ -33,6 +38,122 @@ class Country
      * @ORM\Column(type="integer", nullable=true)
      */
     protected $numcode;
+    
+	/**
+     * Set input filter
+     *
+     * @param  InputFilterInterface $inputFilter
+     * @return InputFilterAwareInterface
+     */
+	public function setInputFilter(InputFilterInterface $inputFilter)
+    {
+        throw new \Exception("Not used");
+    }
+    
+    /**
+     * Retrieve input filter
+     *
+     * @return InputFilterInterface
+     */
+    public function getInputFilter()
+    {
+    	if (null === $this->inputFilter) {
+    		$inputFilter = new InputFilter();
+    		$factory     = new InputFilterFactory();
+    		
+    		$inputFilter->add($factory->createInput(array(
+    			'name'     => 'iso',
+    			'required' => 'true',
+    			'filters'  => array(
+    				array('name' => 'StripTags'),
+    				array('name' => 'StringTrim'),
+    			),
+    			'validators' => array(
+    				array(
+    					'name'    => 'StringLength',
+    					'options' => array(
+    						'encoding' => 'UTF-8',
+    						'min'      => 1,
+    						'max'      => 2
+    					)
+    				)
+    			)
+    		)));
+    		
+    		$inputFilter->add($factory->createInput(array(
+    			'name'     => 'english_name',
+    			'required' => 'true',
+    			'filters'  => array(
+    				array('name' => 'StripTags'),
+    				array('name' => 'StringTrim'),
+    			),
+    			'validators' => array(
+    				array(
+    					'name'    => 'StringLength',
+    					'options' => array(
+    						'encoding' => 'UTF-8',
+    						'min'      => 1,
+    						'max'      => 80
+    					)
+    				)
+    			)
+    		)));
+    		
+    		$inputFilter->add($factory->createInput(array(
+    			'name'     => 'iso3',
+    			'required' => 'true',
+    			'filters'  => array(
+    				array('name' => 'StripTags'),
+    				array('name' => 'StringTrim'),
+    			),
+    			'validators' => array(
+    				array(
+    					'name'    => 'StringLength',
+    					'options' => array(
+    						'encoding' => 'UTF-8',
+    						'min'      => 1,
+    						'max'      => 3
+    					)
+    				)
+    			)
+    		)));
+    		
+    		$inputFilter->add($factory->createInput(array(
+            	'name'     => 'numcode',
+            	'required' => true,
+            	'filters'  => array(
+                	array('name' => 'Int'),
+            	),
+        	)));
+    		
+    		$this->inputFilter = $inputFilter;
+    	}
+    	
+    	return $this->inputFilter;
+    }
+    
+	/**
+     * Convert the object to an array.
+     *
+     * @return array
+     */
+    public function getArrayCopy() 
+    {
+        return get_object_vars($this);
+    }
+
+    /**
+     * Populate from an array.
+     *
+     * @param array $data
+     */
+    public function populate($data = array()) 
+    {
+        $this->iso          = $data['iso'];
+        $this->english_name = $data['english_name'];
+        $this->iso3         = $data['iso3'];
+        $this->numcode      = $data['numcode'];
+    }
     
 	/**
      * Get iso code 2.
