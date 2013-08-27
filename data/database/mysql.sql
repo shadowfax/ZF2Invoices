@@ -60,6 +60,7 @@ CREATE TABLE IF NOT EXISTS `clients` (
   KEY `IDX_COUNTRY` (`country_iso`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
+
 -- --------------------------------------------------------
 
 --
@@ -73,6 +74,37 @@ CREATE TABLE IF NOT EXISTS `client_contact_linker` (
   KEY `contact_id` (`contact_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `companies`
+--
+
+CREATE TABLE IF NOT EXISTS `companies` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `tax_id` varchar(15) DEFAULT NULL,
+  `street` varchar(255) NOT NULL,
+  `street2` varchar(255) DEFAULT NULL,
+  `locality` varchar(255) NOT NULL,
+  `region` varchar(255) NOT NULL,
+  `zip` varchar(20) NOT NULL,
+  `country_iso` char(2) NOT NULL,
+  `phone` varchar(30) DEFAULT NULL,
+  `fax` varchar(30) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `base_currency` char(3) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_BASE_CURRENCY` (`base_currency`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Currently only one company supported with ID 0' AUTO_INCREMENT=2 ;
+
+--
+-- Volcado de datos para la tabla `companies`
+--
+
+INSERT INTO `companies` (`id`, `name`, `tax_id`, `street`, `street2`, `locality`, `region`, `zip`, `country_iso`, `phone`, `fax`, `email`, `base_currency`) VALUES
+(1, 'Acme Corporation', '666666666', 'Road Runner Hideout', '', 'Cartoonville', 'Loney Tunes', '94480', 'ES', '', '', 'roadrunner@acme.com', 'EUR');
 
 -- --------------------------------------------------------
 
@@ -359,7 +391,7 @@ INSERT INTO `countries` (`iso`, `english_name`, `iso3`, `numcode`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `currencies` (
-  `iso` varchar(10) NOT NULL,
+  `iso` char(3) NOT NULL,
   `currency` varchar(255) NOT NULL,
   `symbol` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`iso`)
@@ -681,7 +713,6 @@ CREATE TABLE IF NOT EXISTS `products_taxes` (
   KEY `IX_PRODUCT_ID` (`product_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-
 -- --------------------------------------------------------
 
 --
@@ -734,7 +765,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   UNIQUE KEY `username` (`username`),
   UNIQUE KEY `email` (`email`),
   KEY `IDX_CLIENT_ID` (`client_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
 
 --
 -- Volcado de datos para la tabla `users`
@@ -813,6 +844,12 @@ ALTER TABLE `clients`
 ALTER TABLE `client_contact_linker`
   ADD CONSTRAINT `client_contact_linker_ibfk_1` FOREIGN KEY (`client_id`) REFERENCES `clients` (`id`),
   ADD CONSTRAINT `client_contact_linker_ibfk_2` FOREIGN KEY (`contact_id`) REFERENCES `contacts` (`id`);
+
+--
+-- Filtros para la tabla `companies`
+--
+ALTER TABLE `companies`
+  ADD CONSTRAINT `companies_ibfk_1` FOREIGN KEY (`base_currency`) REFERENCES `currencies` (`iso`);
 
 --
 -- Filtros para la tabla `expenses`

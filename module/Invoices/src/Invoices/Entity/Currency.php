@@ -178,5 +178,10 @@ class Currency implements InputFilterAwareInterface
         $this->symbol   = $data['symbol'];
     }
     
+    
+    public function getCurrency()
+    {
+    	return $this->currency;
+    }
 	  
 }

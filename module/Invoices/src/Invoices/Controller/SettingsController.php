@@ -1,6 +1,8 @@
 <?php
 namespace Invoices\Controller;
 
+use Invoices\Form\CompanySettings as CompanySettingsForm;
+
 use Doctrine\Common\Collections\ArrayCollection;
 
 use Invoices\Form\TaxSettings as TaxSettingsForm;
@@ -36,7 +38,33 @@ class SettingsController extends AbstractActionController
     
     public function companyAction()
     {
-        return new ViewModel();
+    	$form = new CompanySettingsForm($this->getEntityManager());
+    	$company = $this->getEntityManager()->getRepository('Invoices\Entity\Company')->findOneBy(array('id' => 1));
+    	$form->bind($company);
+    	
+    	if ($this->request->isPost()) {
+			$form->setData($this->request->getPost());
+
+			if ($form->isValid()) {
+				$country = $company->country;
+				if (!$country instanceof Invoices\Entity\Country) {
+					$country = $this->getEntityManager()->getRepository('Invoices\Entity\Country')->findOneBy(array('iso' => $country));
+					$company->setCountry($country);
+				}
+				$currency = $company->currency;
+				if (!$currency instanceof Invoices\Entity\Currency) {
+					$currency = $this->getEntityManager()->getRepository('Invoices\Entity\Currency')->findOneBy(array('iso' => $currency));
+					$company->setCurrency($currency);
+				}
+				$this->getEntityManager()->persist($company);
+				$this->getEntityManager()->flush($company);
+				return $this->redirect()->toRoute('settings');
+			} 
+    	}
+    	
+        return new ViewModel(array(
+        	'form' => $form
+        ));
     }
     
 	public function taxesAction()
@@ -56,7 +84,7 @@ class SettingsController extends AbstractActionController
 				}
 				return $this->redirect()->toRoute('settings/default', array('action' => 'taxes'));	
 			}
-		}
+    	}	
     	
     	return new ViewModel(array(
     		'form' => $form
