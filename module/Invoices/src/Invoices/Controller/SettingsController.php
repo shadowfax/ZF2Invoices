@@ -39,7 +39,9 @@ class SettingsController extends AbstractActionController
     public function companyAction()
     {
     	$form = new CompanySettingsForm($this->getEntityManager());
-    	$company = $this->getEntityManager()->getRepository('Invoices\Entity\Company')->findOneBy(array('id' => '1'));
+    	//$company = $this->getEntityManager()->getRepository('Invoices\Entity\Company')->findOneBy(array('id' => '1'));
+    	$auth = $this->getServiceLocator()->get('zfcuserauthservice');
+		$company = $auth->getIdentity()->getCompany();
     	$form->bind($company);
     	
     	if ($this->request->isPost()) {

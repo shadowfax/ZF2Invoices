@@ -37,6 +37,7 @@ CREATE TABLE IF NOT EXISTS `addressbook` (
   KEY `IDX_CUSTOMER` (`customer_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
+
 -- --------------------------------------------------------
 
 --
@@ -82,7 +83,7 @@ CREATE TABLE IF NOT EXISTS `client_contact_linker` (
 --
 
 CREATE TABLE IF NOT EXISTS `companies` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `tax_id` varchar(15) DEFAULT NULL,
   `street` varchar(255) NOT NULL,
@@ -713,6 +714,7 @@ CREATE TABLE IF NOT EXISTS `products_taxes` (
   KEY `IX_PRODUCT_ID` (`product_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+
 -- --------------------------------------------------------
 
 --
@@ -760,19 +762,19 @@ CREATE TABLE IF NOT EXISTS `users` (
   `displayname` varchar(50) DEFAULT NULL,
   `password` varchar(128) NOT NULL,
   `state` smallint(5) unsigned DEFAULT NULL,
-  `client_id` bigint(20) unsigned DEFAULT NULL,
+  `company_id` bigint(20) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`),
   UNIQUE KEY `email` (`email`),
-  KEY `IDX_CLIENT_ID` (`client_id`)
+  KEY `company_id` (`company_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
 
 --
 -- Volcado de datos para la tabla `users`
 --
 
-INSERT INTO `users` (`id`, `username`, `email`, `displayname`, `password`, `state`, `client_id`) VALUES
-(1, 'admin', 'root@zfinvoices.com', NULL, '$2y$14$Zfa3QIj/igUKS2RJDAeZqOVblraRFelfZuFRhMm0JyvSqhK4cjvma', NULL, NULL);
+INSERT INTO `users` (`id`, `username`, `email`, `displayname`, `password`, `state`, `company_id`) VALUES
+(1, 'admin', 'root@zfinvoices.com', NULL, '$2y$14$Zfa3QIj/igUKS2RJDAeZqOVblraRFelfZuFRhMm0JyvSqhK4cjvma', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -875,7 +877,7 @@ ALTER TABLE `products_taxes`
 -- Filtros para la tabla `users`
 --
 ALTER TABLE `users`
-  ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`client_id`) REFERENCES `clients` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`company_id`) REFERENCES `companies` (`id`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

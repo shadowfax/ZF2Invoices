@@ -15,7 +15,7 @@ use ZfcUser\Entity\UserInterface;
  */
 class User implements UserInterface, ProviderInterface
 {
-/**
+	/**
      * @var int
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -63,10 +63,11 @@ class User implements UserInterface, ProviderInterface
     protected $roles;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Invoices\Entity\Customer")
-     * @ORM\JoinColumn(name="client_id", referencedColumnName="id", nullable=true)
+     * @ORM\ManyToOne(targetEntity="Invoices\Entity\Company")
+     * @ORM\JoinColumn(name="company_id", referencedColumnName="id", nullable=false)
      */
-    protected $client;
+    protected $company;
+    
     
     /**
      * Initialies the roles variable.
@@ -233,22 +234,22 @@ class User implements UserInterface, ProviderInterface
     /**
      * Get the client id if exists
      * 
-     * @return \Invoices\Entity\Client|null
+     * @return \Invoices\Entity\Company
      */
-    public function getClient()
+    public function getCompany()
     {
-    	return $this->client;
+    	return $this->company;
     }
     
     /**
      * Set the client if necesary.
      * 
-     * @param \Invoices\Entity\Client $client
+     * @param \Invoices\Entity\Company $company
      * 
      * @return void
      */
-    public function setClient($client)
+    public function setCompany($company)
     {
-    	$this->client = $client;
+    	$this->company = $company;
     }
 }
