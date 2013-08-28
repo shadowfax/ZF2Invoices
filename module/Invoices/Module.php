@@ -39,6 +39,7 @@ class Module implements AutoloaderProviderInterface
 			'factories' => array(
 				'invoices.service.client' => 'Invoices\Factory\ClientServiceFactory',
 				'invoices.service.items'  => 'Invoices\Factory\InvoiceItemsServiceFactory',
+				'invoice_service.taxes'  => 'Invoices\Factory\TaxServiceFactory',
 			)
 		);
 	}

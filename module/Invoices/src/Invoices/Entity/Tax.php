@@ -28,9 +28,15 @@ class Tax implements InputFilterAwareInterface
      * @var int
      * @ORM\Id
      * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id = 0;
+    protected $company_id = 0;
+    
+	/**
+     * @var int
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     */
+    protected $id;
     
     /**
      * @var string
@@ -82,6 +88,18 @@ class Tax implements InputFilterAwareInterface
         } else {
         	throw new \Exception('Property "' . $property .'" does not exist.');
         }
+    }
+    
+    /**
+     * Magic setter to see if a property is set.
+     *
+     * @param string $property
+     * @param mixed $value
+     */
+    public function __isset($property)
+    {
+    	if (!property_exists($this, $property)) return false;
+    	return isset($this->$property);
     }
     
     /**
@@ -181,11 +199,34 @@ class Tax implements InputFilterAwareInterface
      */
     public function populate($data = array()) 
     {
+    	if (isset($data['company_id'])) {
+    		$this->company_id   = $data['company_id'];
+    	}
         $this->id           = $data['id'];
         $this->description  = $data['description'];
         $this->percentage   = $data['percentage'];
         $this->equalization = $data['equalization'];
         $this->active       = $data['active'];
+    }
+    
+    /**
+     * Get the company ID
+     * 
+     * @return int
+     */
+    public function getCompanyId()
+    {
+    	return $this->company_id;
+    }
+
+    /**
+     * Set the company ID
+     * 
+     * @param int $id
+     */
+    public function setCompanyId($id)
+    {
+    	$this->company_id = (int)$id;
     }
     
 	/**

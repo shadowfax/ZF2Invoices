@@ -3,6 +3,8 @@
 namespace Invoices\Form;
 
 
+use Invoices\Service\TaxService;
+
 use Doctrine\Common\Collections\ArrayCollection;
 
 use Zend\Form\Form;
@@ -16,26 +18,20 @@ use Invoices\Form\Fieldset\TaxSettingsFieldset;
 use Zend\Stdlib\Hydrator\ClassMethods as ClassMethodsHydrator;
 
 
-class TaxSettings extends Form implements ObjectManagerAwareInterface
+class TaxSettings extends Form
 {
 	
-	protected $objectManager;
+	protected $taxService;
 	
-	public function setObjectManager(ObjectManager $objectManager)
-    {
-        $this->objectManager = $objectManager;
  
-        return $this;
-    }
- 
-    public function getObjectManager()
+    public function getTaxService()
     {
-        return $this->objectManager;
+        return $this->taxService;
     }
     
-    public function __construct(ObjectManager $objectManager)
+    public function __construct(TaxService $taxService)
     {
-    	$this->setObjectManager($objectManager);
+    	$this->taxService = $taxService;
         parent::__construct('taxes');
         
         $this->setAttribute('method', 'post')
@@ -54,7 +50,7 @@ class TaxSettings extends Form implements ObjectManagerAwareInterface
         ));
         // Fill out the taxes
         $taxValues = array();
-        $taxes = $this->getObjectManager()->getRepository('Invoices\Entity\Tax')->findAll();
+        $taxes = $this->getTaxService()->findAll();
         foreach ($taxes as $taxEntity) {
         	$taxValues[] = $taxEntity->getArrayCopy();
         }

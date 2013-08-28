@@ -738,15 +738,16 @@ CREATE TABLE IF NOT EXISTS `sessions` (
 --
 
 CREATE TABLE IF NOT EXISTS `taxes` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `company_id` bigint(20) unsigned NOT NULL,
+  `id` int(10) unsigned NOT NULL,
   `description` varchar(50) NOT NULL,
   `percentage` decimal(4,1) NOT NULL,
   `equalization` decimal(4,1) DEFAULT NULL COMMENT 'Recargo de equivalencia',
   `active` tinyint(1) NOT NULL DEFAULT '1',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `UX_DESCRIPTION` (`description`),
-  KEY `IX_ACTIVE` (`active`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+  PRIMARY KEY (`company_id`,`id`),
+  UNIQUE KEY `UX_DESCRIPTION` (`company_id`,`description`),
+  KEY `IX_ACTIVE` (`company_id`,`active`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 -- --------------------------------------------------------
@@ -767,7 +768,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   UNIQUE KEY `username` (`username`),
   UNIQUE KEY `email` (`email`),
   KEY `company_id` (`company_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 --
 -- Volcado de datos para la tabla `users`
@@ -870,8 +871,13 @@ ALTER TABLE `invoices`
 -- Filtros para la tabla `products_taxes`
 --
 ALTER TABLE `products_taxes`
-  ADD CONSTRAINT `products_taxes_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
-  ADD CONSTRAINT `products_taxes_ibfk_2` FOREIGN KEY (`tax_id`) REFERENCES `taxes` (`id`);
+  ADD CONSTRAINT `products_taxes_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`);
+
+--
+-- Filtros para la tabla `taxes`
+--
+ALTER TABLE `taxes`
+  ADD CONSTRAINT `taxes_ibfk_1` FOREIGN KEY (`company_id`) REFERENCES `companies` (`id`);
 
 --
 -- Filtros para la tabla `users`

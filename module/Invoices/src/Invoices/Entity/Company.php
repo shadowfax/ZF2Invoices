@@ -367,6 +367,15 @@ class Company implements InputFilterAwareInterface
     	return $this->inputFilter;
     }
     
+    public function getId()
+    {
+    	return $this->id;
+    }
+    
+    public function setId($id)
+    {
+    	$this->id = (int)$id;
+    }
     
     public function getName()
     {

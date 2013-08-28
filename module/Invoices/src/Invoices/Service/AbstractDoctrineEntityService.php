@@ -36,6 +36,14 @@ abstract class AbstractDoctrineEntityService implements EventManagerAwareInterfa
 	 */
     protected $entityRepository;
     
+    /**
+     * Company instance.
+     * Most of our operations require access to the company.
+     * 
+     * @var Invoices\Entity\Company
+     */
+    protected $company;
+    
 	/**
      * Set the event manager instance
      *
@@ -133,6 +141,18 @@ abstract class AbstractDoctrineEntityService implements EventManagerAwareInterfa
         return $this;
     }
     
+    public function getCompany()
+    {
+    	if (null === $this->company) {
+    		$auth = $this->getServiceLocator()->get('zfcuserauthservice');
+    		if (!$auth->hasIdentity()) {
+    			throw new \Exception('Must be authenticated');
+    		}
+    		$this->company = $auth->getIdentity()->getCompany();
+    	}
+    	return $this->company;
+    }
+    
 	/**
      * Finds all entities in the repository.
      *
@@ -179,6 +199,15 @@ abstract class AbstractDoctrineEntityService implements EventManagerAwareInterfa
     	$entity = $this->getEntityRepository()->find($id, $lockMode, $lockVersion);
     	$this->getEventManager()->trigger(__FUNCTION__ . '.post', $this, array('id' => $id, 'entity' => $entity));
     	return $entity;
+    }
+    
+	public function findBy(array $criteria, array $orderBy = null)
+    {
+    	$entity = null;
+    	$this->getEventManager()->trigger(__FUNCTION__ . '.pre', $this, array('criteria' => $criteria, 'entity' => $entity));
+        $entity = $this->getEntityRepository()->findBy( $criteria, $orderby );
+        $this->getEventManager()->trigger(__FUNCTION__ . '.post', $this, array('criteria' => $criteria, 'entity' => $entity));
+        return $entity;
     }
     
 	/**
