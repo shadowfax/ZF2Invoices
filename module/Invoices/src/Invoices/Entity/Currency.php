@@ -3,8 +3,6 @@ namespace Invoices\Entity;
 
 
 use Doctrine\ORM\Mapping as ORM;
-use Zend\InputFilter\InputFilterAwareInterface;
-use Zend\InputFilter\InputFilterInterface;
 use Zend\InputFilter\Factory as InputFilterFactory;
 use Zend\InputFilter\InputFilter;
 
@@ -15,14 +13,8 @@ use Zend\InputFilter\InputFilter;
  * @ORM\Table(name="currencies")
  *
  */
-class Currency implements InputFilterAwareInterface
+class Currency extends AbstractEntity
 {
-	/**
-	 * Input filter instance.
-	 * 
-	 * @var InputFilterInterface
-	 */
-	protected $inputFilter;
 	
 	/**
      * @var int
@@ -44,43 +36,7 @@ class Currency implements InputFilterAwareInterface
     protected $symbol;
     
     
-	/**
-     * Magic getter to expose protected properties.
-     *
-     * @param string $property
-     * @return mixed
-     */
-    public function __get($property) 
-    {
-    	if (property_exists($this, $property)) return $this->$property;
-    	return null;
-    }
-
-    /**
-     * Magic setter to save protected properties.
-     *
-     * @param string $property
-     * @param mixed $value
-     */
-    public function __set($property, $value) 
-    {
-        if (property_exists($this, $property)) {
-			$this->$property = $value;
-        } else {
-        	throw new \Exception('Property "' . $property .'" does not exist.');
-        }
-    }
-    
-    /**
-     * Set input filter
-     *
-     * @param  InputFilterInterface $inputFilter
-     * @return InputFilterAwareInterface
-     */
-	public function setInputFilter(InputFilterInterface $inputFilter)
-    {
-        throw new \Exception("Not used");
-    }
+	
     
     /**
      * Retrieve input filter
@@ -89,7 +45,7 @@ class Currency implements InputFilterAwareInterface
      */
     public function getInputFilter()
     {
-    	if (null === $this->inputFilter) {
+    	if (null === $this->_inputFilter) {
     		$inputFilter = new InputFilter();
     		$factory     = new InputFilterFactory();
     		
@@ -150,62 +106,11 @@ class Currency implements InputFilterAwareInterface
     			)
     		)));
     		
-    		$this->inputFilter = $inputFilter;
+    		$this->_inputFilter = $inputFilter;
     	}
     	
-    	return $this->inputFilter;
+    	return $this->_inputFilter;
     }
     
-	/**
-     * Convert the object to an array.
-     *
-     * @return array
-     */
-    public function getArrayCopy() 
-    {
-        return get_object_vars($this);
-    }
-
-    /**
-     * Populate from an array.
-     *
-     * @param array $data
-     */
-    public function populate($data = array()) 
-    {
-        $this->iso      = $data['iso'];
-        $this->currency = $data['currency'];
-        $this->symbol   = $data['symbol'];
-    }
-    
-    
-    public function getCurrency()
-    {
-    	return $this->currency;
-    }
-    
-    public function setCurrency($currency)
-    {
-    	$this->currency = $currency;
-    }
-	 
-    public function getIso()
-    {
-    	return $this->iso;
-    }
-    
-    public function setIso($iso)
-    {
-    	$this->iso = $iso;
-    }
-    
-    public function getSymbol()
-    {
-    	return $this->symbol;
-    }
-    
-    public function setSymbol($symbol)
-    {
-    	$this->symbol = $symbol;
-    }
+	
 }
